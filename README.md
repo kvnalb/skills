@@ -2,6 +2,16 @@
 
 Reusable agent skills.
 
+## Install
+
+Install Intuition Guide with the [Skills CLI](https://github.com/vercel-labs/skills):
+
+```sh
+npx skills add kvnalb/skills --skill intuition-guide
+```
+
+The installer will prompt you to choose the target agent and whether to install the skill for the current project or globally.
+
 ## Available skills
 
 - [Intuition Guide](intuition-guide/SKILL.md) — Builds intuition-first study guides in a dependency-aware sequence, with domain-appropriate justification and explicit checks for learning friction.
