@@ -14,4 +14,4 @@ The installer will prompt you to choose the target agent and whether to install 
 
 ## Available skills
 
-- [Intuition Guide](intuition-guide/SKILL.md) — Builds intuition-first study guides in a dependency-aware sequence, with domain-appropriate justification and explicit checks for learning friction.
+- [Intuition Guide](intuition-guide/SKILL.md) — Learn complex topics through step-by-step guides that show why each idea matters and how it connects to the next.
