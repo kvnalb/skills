@@ -1,17 +1,32 @@
 # Skills
 
-Reusable agent skills.
+Reusable skills for learning and studying, in the open [Agent Skills](https://agentskills.io) format. They work with Claude Code, Codex, Cursor and other compatible agents. Each skill is a folder with a `SKILL.md` and any scripts it needs.
+
+| Skill | What it does | Needs |
+|---|---|---|
+| [Intuition Guide](intuition-guide/SKILL.md) | Builds study guides that read start to finish, showing why each idea matters and how it leads to the next. | Nothing |
+| [Slides RAG](slides-rag/README.md) | Indexes lecture PDFs once, then answers from only the relevant slides, with citations. Keeps the slide images for equations and diagrams. | Shell access, Python 3.9+, PyMuPDF or `uv` |
 
 ## Install
 
-Install Intuition Guide with the [Skills CLI](https://github.com/vercel-labs/skills):
+Install with the [Skills CLI](https://github.com/vercel-labs/skills), replacing the name with the skill you want:
 
 ```sh
-npx skills add kvnalb/skills --skill intuition-guide
+npx skills add kvnalb/skills --skill slides-rag
 ```
 
-The installer will prompt you to choose the target agent and whether to install the skill for the current project or globally.
+The installer asks which agent to target and whether to install for the current project or globally. To skip the prompts, name your agent and install globally. For example, with Codex:
 
-## Available skills
+```sh
+npx skills add kvnalb/skills --skill slides-rag -g -a codex -y
+```
 
-- [Intuition Guide](intuition-guide/SKILL.md) — Learn complex topics through step-by-step guides that show why each idea matters and how it connects to the next.
+To see what's available first:
+
+```sh
+npx skills add kvnalb/skills --list
+```
+
+## Use
+
+Skills load on their own when a request matches, so you can just ask: "make me a study guide for dynamic programming" or "explain the theta join formula from lecture 3".
