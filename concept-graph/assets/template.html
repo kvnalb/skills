@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>__TITLE__</title>
+<style>
+  :root { --ink:#1d1d1f; --mute:#62626b; --bg:#fafafa; --panel:#fff; --line:#d9d9de; }
+  * { box-sizing: border-box; }
+  body { margin:0; font:14px/1.45 -apple-system, "Helvetica Neue", Arial, sans-serif; color:var(--ink); background:var(--bg);
+         display:grid; grid-template-columns: 1fr 380px; height:100vh; overflow:hidden; }
+  #graphwrap { overflow:auto; position:relative; }
+  #graph { padding:24px; transform-origin: 0 0; }
+  #graph svg { max-width:none !important; }
+  aside { background:var(--panel); border-left:1px solid var(--line); overflow:auto; padding:16px 18px 40px; }
+  h1 { font-size:17px; margin:0 0 2px; } .sub { color:var(--mute); font-size:12.5px; margin:0 0 12px; }
+  h2 { font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--mute); margin:18px 0 6px; }
+  .legend { display:grid; grid-template-columns: 74px 1fr; gap:6px 10px; align-items:center; font-size:12.5px; }
+  .legend svg { display:block; }
+  #detail { border:1px solid var(--line); border-radius:8px; padding:10px 12px; background:#fcfcfd; }
+  #detail h3 { margin:0 0 2px; font-size:15px; } #detail .tag { color:var(--mute); font-size:11.5px; }
+  #detail ul { margin:6px 0 0; padding-left:18px; } #detail li { margin:3px 0; }
+  #detail .eg { background:#f3f3f6; border-radius:6px; padding:6px 8px; margin-top:8px; font-size:12.5px; }
+  #detail .nb { margin-top:8px; font-size:12.5px; color:var(--mute); }
+  #detail .nb a { color:#2457c5; cursor:pointer; text-decoration:none; } #detail .nb a:hover { text-decoration:underline; }
+  .zoom { position:fixed; left:12px; bottom:12px; background:#fff; border:1px solid var(--line); border-radius:8px; padding:4px 8px; font-size:12px; z-index:5; }
+  .zoom button { border:1px solid var(--line); background:#fff; border-radius:5px; width:26px; cursor:pointer; }
+  /* focus mode: dim everything not adjacent to the selected node */
+  #graph.focus g.node, #graph.focus path.flowchart-link, #graph.focus g.edgeLabel { opacity:.12; transition:opacity .15s; }
+  #graph.focus .hl { opacity:1 !important; }
+  #graph g.node { cursor:pointer; }
+  #graph .edgeLabel p, #graph .edgeLabel span { font-size:12px !important; }
+  #graph .nodeLabel sub, #graph .nodeLabel sup, #graph .edgeLabel sub { font-size:72%; }
+  #err { color:#c62828; white-space:pre-wrap; }
+</style>
+</head>
+<body>
+<div id="graphwrap"><div id="graph">Loading graph…</div><div id="err"></div></div>
+<aside>
+  <h1 id="ttl"></h1>
+  <p class="sub" id="sub">Click any node for everything the source says about it. Its neighbours stay lit. Click empty space to reset.</p>
+  <div id="detail"></div>
+
+  <h2>Node types</h2>
+  <div class="legend">
+    <svg width="70" height="26"><polygon points="8,2 62,2 69,13 62,24 8,24 1,13" fill="#e3ebfa" stroke="#3b5ea8" stroke-width="1.6"/></svg><div><b>Primitive</b>: <span data-k="prim">undefined building block; everything rests on it</span></div>
+    <svg width="70" height="26"><rect x="1" y="2" width="68" height="22" fill="#fff" stroke="#555" stroke-width="1.2"/></svg><div><b>Definition</b>: <span data-k="def">an object built from others by a formula or rule</span></div>
+    <svg width="70" height="26"><rect x="1" y="2" width="68" height="22" rx="7" fill="#e8f5e9" stroke="#3f8a4f" stroke-width="1.2"/></svg><div><b>Convention</b>: <span data-k="conv">a measurement, notation or unit choice with no new content</span></div>
+    <svg width="70" height="26"><polygon points="10,2 69,2 60,24 1,24" fill="#f3e6f1" stroke="#8e3b78" stroke-width="1.4"/></svg><div><b>Rule / condition</b>: <span data-k="rule">assumed or imposed: axioms, conditions, design rules</span></div>
+    <svg width="70" height="26"><rect x="1" y="2" width="68" height="22" rx="11" fill="#fff1e0" stroke="#c07a12" stroke-width="1.4"/></svg><div><b>Result</b>: <span data-k="res">follows logically. A thick border marks a key result</span></div>
+    <svg width="70" height="26"><polygon points="1,2 69,2 69,24 1,24 10,13" fill="#fffbe0" stroke="#a8901a" stroke-width="1.2"/></svg><div><b>Interpretation</b>: <span data-k="interp">what a result means in plain terms</span></div>
+    <svg width="70" height="26"><rect x="1" y="2" width="68" height="22" fill="#fff" stroke="#c62828" stroke-width="1.4" stroke-dasharray="4 3"/></svg><div><b>“Is NOT”</b>: <span data-k="not">a misconception the source explicitly rules out</span></div>
+    <svg width="70" height="26"><rect x="1" y="2" width="68" height="22" fill="#f4f4f5" stroke="#8a8a92"/><path d="M8 2V24M62 2V24" stroke="#8a8a92"/></svg><div><b>Beyond</b> (predefined process): <span data-k="beyond">continues in later material</span></div>
+    <svg width="70" height="26"><circle cx="35" cy="13" r="11" fill="#fff" stroke="#3b5ea8" stroke-width="1.4"/><text x="35" y="17" font-size="10" text-anchor="middle" fill="#14284f">① X</text></svg><div><b>Connector</b>: <span data-k="conn">a reference to a node in a non-adjacent cluster. Click it to jump there</span></div>
+  </div>
+  <h2>Edge types</h2>
+  <div class="legend">
+    <svg width="70" height="14"><path d="M2 7H62" stroke="#555" stroke-width="1.3"/><path d="M60 3L68 7L60 11Z" fill="#555"/></svg><div><b>builds</b>: <span data-k="b">label = the operation that constructs it</span></div>
+    <svg width="70" height="14"><path d="M2 7H62" stroke="#555" stroke-width="3"/><path d="M60 2L69 7L60 12Z" fill="#555"/></svg><div><b>implies</b> (⇒): <span data-k="i">logical consequence</span></div>
+    <svg width="70" height="14"><path d="M10 7H60" stroke="#555" stroke-width="3"/><path d="M60 2L69 7L60 12Z M10 2L1 7L10 12Z" fill="#555"/></svg><div><b>equivalent</b> (⇔): <span data-k="e">two forms of the same thing</span></div>
+    <svg width="70" height="14"><path d="M2 7H62" stroke="#555" stroke-width="1.3" stroke-dasharray="4 3"/><path d="M60 3L68 7L60 11Z" fill="#555"/></svg><div><b>means / interprets / leads to</b><span data-k="m"></span></div>
+    <svg width="70" height="14"><path d="M2 7H62" stroke="#c62828" stroke-width="1.5"/><path d="M60 3L68 11M68 3L60 11" stroke="#c62828" stroke-width="1.6"/></svg><div><b>fails</b>: <span data-k="x">does not hold</span></div>
+  </div>
+  <h2>Clusters</h2>
+  <p class="sub" style="margin:0" id="cl"></p>
+</aside>
+<div class="zoom">zoom <button id="zo">−</button> <span id="zl">100%</span> <button id="zi">+</button></div>
+
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+
+// Injected by scripts/build_graph.py — the page itself never changes, only this data.
+const G = /*__GRAPH_DATA__*/null;
+
+const N = G.nodes, E = G.edges, CL = G.clusters, SYM = G.sym || {};
+const TYPE_NAME = { prim:'Primitive', def:'Definition', conv:'Convention', rule:'Rule / condition', res:'Result', key:'Key result',
+                    interp:'Interpretation', not:'Is NOT', beyond:'Beyond' };
+const SHAPE = { prim:['{{','}}'], def:['[',']'], conv:['(',')'], rule:['[/','/]'], res:['([','])'], key:['([','])'],
+                interp:['>',']'], not:['[',']'], beyond:['[[',']]'], conn:['((','))'] };
+const ARROW = { b:'-->', i:'==>', e:'<==>', m:'-.->', x:'--x' };
+const PALETTE = ['#3b5ea8','#3f8a4f','#b07b1e','#8e3b78','#b0413a','#2f6f7e','#6b5b95','#8a6d3b','#3d7a8a','#a0522d'];
+const CNUM = k => k < 20 ? String.fromCharCode(0x2460 + k) : `(${k + 1})`;
+const first = l => l.split('<br/>')[0];
+
+// ---------- sidebar text ----------
+document.getElementById('ttl').innerHTML = G.title;
+if (G.subtitle) document.getElementById('sub').innerHTML = G.subtitle;
+for (const [k, v] of Object.entries(G.legend || {})) { const s = document.querySelector(`[data-k="${k}"]`); if (s) s.innerHTML = (k === 'm' ? ': ' : '') + v; }
+document.getElementById('cl').innerHTML = CL.map((c, k) => `${CNUM(k)} ${c.title.replace(/&/g, '&amp;')}`).join(' · ') + (G.tagNote ? '. ' + G.tagNote : '');
+const START = G.start ? `<h3>Start here</h3>${G.start.heading ? `<div class="tag">${G.start.heading}</div>` : ''}<ul>${G.start.items.map(x => `<li>${x}</li>`).join('')}</ul>`
+                      : `<h3>Start here</h3><p class="sub" style="margin:4px 0 0">Click any node to see its details and connections.</p>`;
+document.getElementById('detail').innerHTML = START;
+
+// ---------- graph source ----------
+const clusterOf = {}; CL.forEach((c, k) => c.nodes.forEach(id => clusterOf[id] = k));
+// Edges between non-adjacent clusters are drawn from a connector placed inside the target cluster,
+// so no wire ever has to cross an intervening cluster.
+const ghosts = {};               // ghostId -> real source id
+const R = E.map(([a, b, k, l]) => {
+  if (Math.abs(clusterOf[a] - clusterOf[b]) <= 1) return [a, b, k, l];
+  const g = `${a}to${CL[clusterOf[b]].id}`;
+  ghosts[g] = a; return [g, b, k, l];
+});
+let src = 'flowchart TB\n';
+for (const c of CL) {
+  src += `subgraph ${c.id}["${CNUM(CL.indexOf(c))} ${c.title}"]\n direction TB\n`;
+  for (const id of c.nodes) { const n = N[id]; const [a, b] = SHAPE[n.type]; src += `  ${id}${a}"${n.label}"${b}:::${n.type}\n`; }
+  for (const [g, a] of Object.entries(ghosts)) if (g.endsWith('to' + c.id)) src += `  ${g}(("${CNUM(clusterOf[a])} ${SYM[a] || first(N[a].label)}")):::conn\n`;
+  src += 'end\n';
+}
+R.forEach(([a, b, k, l], i) => { src += `${a} ${ARROW[k]}${l ? `|"${l}"|` : ''} ${b}\n`; if (k === 'x') src += `linkStyle ${i} stroke:#c62828,stroke-width:1.6px,color:#c62828\n`; });
+src += `classDef prim fill:#e3ebfa,stroke:#3b5ea8,stroke-width:1.8px,color:#14284f,font-weight:600
+classDef def fill:#ffffff,stroke:#555,stroke-width:1.2px
+classDef conv fill:#e8f5e9,stroke:#3f8a4f,stroke-width:1.2px
+classDef rule fill:#f3e6f1,stroke:#8e3b78,stroke-width:1.5px
+classDef res fill:#fff1e0,stroke:#c07a12,stroke-width:1.3px
+classDef key fill:#ffe2bd,stroke:#a35f00,stroke-width:3px,font-weight:600
+classDef interp fill:#fffbe0,stroke:#a8901a,stroke-width:1.2px
+classDef not fill:#fff,stroke:#c62828,stroke-width:1.5px,stroke-dasharray:5 3,color:#a01e1e
+classDef beyond fill:#f4f4f5,stroke:#8a8a92,color:#555
+classDef conn fill:#fff,stroke:#3b5ea8,stroke-width:1.4px,color:#14284f,font-size:12px
+`;
+CL.forEach((c, k) => { const s = c.color || PALETTE[k % PALETTE.length]; src += `style ${c.id} fill:${s}0d,stroke:${s}\n`; });
+
+const cfg = { startOnLoad:false, securityLevel:'loose', theme:'base',
+  themeVariables:{ fontFamily:'-apple-system, Helvetica Neue, Arial, sans-serif', fontSize:'14px', lineColor:'#666', edgeLabelBackground:'#ffffff' },
+  flowchart:{ htmlLabels:true, curve:'basis', nodeSpacing:28, rankSpacing:46, padding:10, wrappingWidth:400 } };
+
+async function render() {
+  const el = document.getElementById('graph');
+  try { // ELK routes many cross-cluster edges far better than dagre; fall back if the CDN module is unavailable
+    const elk = (await import('https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0/dist/mermaid-layout-elk.esm.min.mjs')).default;
+    mermaid.registerLayoutLoaders(elk);
+    mermaid.initialize({ ...cfg, layout:'elk', elk:{ mergeEdges:false, nodePlacementStrategy:'NETWORK_SIMPLEX' } });
+    el.innerHTML = (await mermaid.render('g1', src)).svg;
+  } catch (e) {
+    console.warn('ELK failed, using dagre', e);
+    mermaid.initialize(cfg);
+    el.innerHTML = (await mermaid.render('g2', src)).svg;
+  }
+  wire(el);
+}
+
+// ---------- interaction ----------
+const nodeEl = id => document.querySelector(`#graph g.node[id*="-${id}-"]`);
+const nbrs = id => E.filter(e => e[0] === id || e[1] === id);
+const drawn = (a, b) => R[E.findIndex(e => e[0] === a && e[1] === b)][0];
+const jump = id => { select(id); nodeEl(id)?.scrollIntoView({ block:'center', inline:'center', behavior:'smooth' }); };
+function wire(el) {
+  for (const id of Object.keys(N)) nodeEl(id)?.addEventListener('click', ev => { ev.stopPropagation(); select(id); });
+  for (const [g, a] of Object.entries(ghosts)) nodeEl(g)?.addEventListener('click', ev => { ev.stopPropagation(); jump(a); });
+  const svg = el.querySelector('svg'), w = +svg.getAttribute('viewBox').split(' ')[2];
+  svg.style.width = w + 'px'; svg.removeAttribute('width'); svg.style.maxWidth = 'none';
+  setZ(Math.max(.55, Math.min(1, (document.getElementById('graphwrap').clientWidth - 48) / w)) - z);
+  document.getElementById('graphwrap').addEventListener('click', () => { el.classList.remove('focus'); el.querySelectorAll('.hl').forEach(x => x.classList.remove('hl')); });
+}
+function select(id) {
+  const el = document.getElementById('graph');
+  el.querySelectorAll('.hl').forEach(x => x.classList.remove('hl'));
+  el.classList.add('focus');
+  const ids = new Set([id]);
+  for (const [a0, b] of nbrs(id)) { const a = drawn(a0, b); ids.add(a); ids.add(a0); ids.add(b);
+    el.querySelectorAll(`path[data-id^="L_${a}_${b}_"]`).forEach(p => p.classList.add('hl'));
+    el.querySelectorAll(`.edgeLabel [data-id^="L_${a}_${b}_"]`).forEach(l => l.closest('g.edgeLabel')?.classList.add('hl')); }
+  ids.forEach(n => nodeEl(n)?.classList.add('hl'));
+  const n = N[id];
+  const linkTo = m => `<a data-n="${m}">${first(N[m].label)}</a>`;
+  const ins = nbrs(id).filter(e => e[1] === id), outs = nbrs(id).filter(e => e[0] === id);
+  const fmt = e => `${linkTo(e[0] === id ? e[1] : e[0])}${e[3] ? ` <span style="color:#999">(${e[3]})</span>` : ''}`;
+  document.getElementById('detail').innerHTML =
+    `<h3>${first(n.label)}</h3><div class="tag">${TYPE_NAME[n.type]}${n.tags ? ' · ' + n.tags : ''}</div>
+     <div style="margin-top:6px;font-family:Cambria,'Times New Roman',serif">${n.label.split('<br/>').slice(1).join('<br/>').replace(/#lt;/g,'&lt;').replace(/#gt;/g,'&gt;')}</div>
+     <ul>${(n.details || []).map(x => `<li>${x}</li>`).join('')}</ul>${n.example ? `<div class="eg"><b>Example.</b> ${n.example}</div>` : ''}
+     ${ins.length ? `<div class="nb"><b>Comes from:</b> ${ins.map(fmt).join(' · ')}</div>` : ''}
+     ${outs.length ? `<div class="nb"><b>Leads to:</b> ${outs.map(fmt).join(' · ')}</div>` : ''}`;
+  document.querySelectorAll('#detail a[data-n]').forEach(a => a.onclick = () => jump(a.dataset.n));
+}
+let z = 1; const setZ = d => { z = Math.min(2, Math.max(.3, z + d)); document.getElementById('graph').style.zoom = z; document.getElementById('zl').textContent = Math.round(z * 100) + '%'; };
+document.getElementById('zi').onclick = () => setZ(.1); document.getElementById('zo').onclick = () => setZ(-.1);
+render().catch(e => document.getElementById('err').textContent = String(e));
+window.__select = select;
+</script>
+</body>
+</html>
