@@ -1,11 +1,11 @@
 # slides-rag
 
-Index lecture PDFs once, then answer questions from single slides. A Claude Code skill: ask about your lectures in any project and it loads itself. Originals are never modified.
+Index lecture PDFs once, then answer questions from single slides. An [Agent Skill](https://agentskills.io) for any compatible agent: ask about your lectures and it loads itself. Originals are never modified.
 
-Install: `npx skills add kvnalb/skills --skill slides-rag -g -a claude-code -y`
+Install: `npx skills add kvnalb/skills --skill slides-rag`
 
 ```text
-SKILL.md              instructions Claude follows
+SKILL.md              instructions the agent follows
 scripts/slides.py     CLI (Python stdlib + PyMuPDF)
 scripts/test_slides.py  end-to-end check on a generated fixture
 ~/.local/share/slides-rag/   cache (override with SLIDES_RAG_HOME)
@@ -15,12 +15,12 @@ Requires Python 3.9+ with FTS5 in sqlite3. PyMuPDF comes from your environment, 
 
 ## Usage
 
-In Claude Code, just ask: "index ~/Courses/Data101/Slides", "explain the theta join formula", "quiz me on lecture 3".
+In your agent, just ask: "index ~/Courses/Data101/Slides", "explain the theta join formula", "quiz me on lecture 3".
 
 Directly:
 
 ```bash
-alias slides='python3 ~/.claude/skills/slides-rag/scripts/slides.py'
+alias slides='python3 /path/to/slides-rag/scripts/slides.py'
 ```
 
 ```bash
@@ -65,7 +65,7 @@ Cache entries are keyed by SHA-256, so renames and moves reuse everything, and t
 
 Data 101 corpus (49 PDFs, 1,511 pages, 41 MB). Local cost, no model tokens: 88 s for a first index (extract 26 s, render 49 s, OCR 13 s), 0.4 s for a no-op re-index, 222 MB of cache.
 
-Model cost, from real API usage in headless `claude -p` runs (Sonnet, one run per cell, so treat as indicative). "Added context" is the final context size minus the session's starting size. The direct arm had the skill and shell tools disabled.
+Model cost, from real API usage in headless Claude Code runs (Sonnet, one run per cell, so treat as indicative). "Added context" is the final context size minus the session's starting size. The direct arm had the skill and shell tools disabled.
 
 | Question | Added context: PDF | Added context: skill | Bill: PDF | Bill: skill |
 |---|---:|---:|---:|---:|
@@ -86,7 +86,7 @@ What the table does not say:
 ## Test
 
 ```bash
-python3 ~/.claude/skills/slides-rag/scripts/test_slides.py
+python3 /path/to/slides-rag/scripts/test_slides.py
 ```
 
 ## Limits
@@ -96,3 +96,4 @@ python3 ~/.claude/skills/slides-rag/scripts/test_slides.py
 - Build detection uses word containment, so builds that swap content stay ungrouped. Nothing is lost; they just rank as separate hits.
 - Flags are heuristics tuned on Google Slides exports. Beamer and PowerPoint decks may need different thresholds.
 - Slide numbers are PDF page numbers.
+- Token figures above were measured on Claude Code only. Other agents read PDFs and images differently, so their costs will differ.

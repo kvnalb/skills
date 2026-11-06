@@ -1,18 +1,15 @@
 ---
 name: slides-rag
-description: Answer questions from university lecture PDFs without reloading whole decks. Indexes each PDF once into a persistent full-text and slide-image cache, then retrieves only the relevant slides, with lecture and slide citations. Use when the user asks to study, explain, summarize, review, or quiz on lecture slides or course PDFs, or asks what a lecture or slide says, even if they don't name a file.
-when_to_use: Trigger phrases include "explain slide 12", "what did lecture 3 say about joins", "quiz me on normalization", "summarize this lecture", "review the slides for the midterm", "index these slides". Also use for any .pdf or folder of PDFs that looks like course material.
-argument-hint: "[question, or PDF / directory path]"
-allowed-tools:
-  - "Bash(python3 ${CLAUDE_SKILL_DIR}/scripts/slides.py *)"
+description: Answer questions from university lecture PDFs without reloading whole decks. Indexes each PDF once into a persistent full-text and slide-image cache, then retrieves only the relevant slides, with lecture and slide citations. Use when the user asks to study, explain, summarize, review, or quiz on lecture slides or course PDFs, or asks what a lecture or slide says, even if they don't name a file. Examples include "explain slide 12", "what did lecture 3 say about joins", "quiz me on normalization", "summarize this lecture", "review the slides for the midterm", and "index these slides".
+compatibility: Requires shell access and Python 3.9+ with SQLite FTS5, plus PyMuPDF or uv. Works best with an agent that can view local PNG files. Tesseract is optional.
 ---
 
 # slides-rag
 
-Retrieve lecture content through the cache. Never Read a lecture PDF directly, and never Read a whole `lecture.md`.
+Retrieve lecture content through the cache. Never open a lecture PDF directly, and never load a whole `lecture.md`.
 
 ```bash
-python3 ${CLAUDE_SKILL_DIR}/scripts/slides.py <command>
+python3 scripts/slides.py <command>
 ```
 
 | Command | Use |
@@ -25,7 +22,7 @@ python3 ${CLAUDE_SKILL_DIR}/scripts/slides.py <command>
 | `show <lecture> 12,14-16 [-c 1]` | Slide text and image paths; `-c 1` adds neighbours |
 | `crop <lecture> <page> x0 y0 x1 y1` | Re-render a region from the PDF (fractions 0..1) for tiny notation |
 
-Run each command as its own Bash call, with this full path. No `cd`, no `;` or `&&` chains: they fall outside the pre-approved pattern and waste a turn.
+`scripts/slides.py` is relative to this skill's directory; resolve it to an absolute path before running it. Run one command per shell call, because chained commands often need extra permission approval.
 
 `<lecture>` is the 8-character ref from output (preferred), or words from the title or path. `-l` also accepts a course or folder name.
 
@@ -35,9 +32,10 @@ Run each command as its own Bash call, with this full path. No `cd`, no `;` or `
 2. `search` with 2 to 4 distinctive terms, adding `-l` when the user names a lecture. Rephrase once if the hits look wrong; slides use the course's own vocabulary.
 3. `show` only the slides you need. Use `-c 1` when a slide continues an argument.
 4. Decide whether to look at the image:
-   - **Read the image path** when `show` prints `VIEW IMAGE` and the answer touches that content, or when the question concerns an equation, diagram, table, layout, annotation, or anything visual.
+   - **Open the image file** when `show` prints `VIEW IMAGE` and the answer touches that content, or when the question concerns an equation, diagram, table, layout, annotation, or anything visual.
    - **Skip it** when plain text answers the question and the slide is unflagged. Each image costs about 1,900 tokens; text is usually under 100.
    - If the first image leaves notation unclear, use `crop` on that region.
+   - If you cannot view local images, answer from the text and state which flagged content you could not check.
 5. Answer with citations: `(Relational Model & Algebra, slide 14)`. Slide numbers are PDF page numbers; if the printed number differs, say so.
 
 For summaries and quizzes, start with `outline`, then `show` only slides that carry substance. Skip agenda and repeated outline slides. Don't dump a deck into context.
