@@ -1,0 +1,2271 @@
+{
+ "title": "Econ 136 · course so far as a concept graph",
+ "subtitle": "Click any node for everything the notes say about it (examples included). Its neighbours stay lit. Click empty space to reset.",
+ "start": {
+  "heading": "The spine",
+  "items": [
+   "<b>Time → States → Payoffs → Prices → Portfolios → No-arbitrage → SDF</b> (L1 “big picture”).",
+   "<b>Fixed income = the SDF along the time axis:</b> zero price P(T) = E[m<sub>t+T</sub>] → coupon bonds are portfolios of zeros (LOOP) → spot rates, YTM and forwards are translations of zero prices → duration and convexity measure how prices move when discounting changes.",
+   "Everything else is a definition built from these, a convention for measuring them, or a consequence of two rules (prices are linear; no free lunch).",
+   "“Prices are disciplined by arbitrage, interpreted through risk, and sometimes explained by equilibrium.”"
+  ]
+ },
+ "legend": {
+  "conv": "a measurement or unit choice with no new economics",
+  "interp": "what a result means economically",
+  "not": "a misconception the notes explicitly rule out"
+ },
+ "tagNote": "Tags such as “L1·L4” show every lecture that repeats a concept; the graph keeps it once.",
+ "clusters": [
+  {
+   "id": "CORE",
+   "title": "Core objects — primitives (L1)",
+   "nodes": [
+    "T",
+    "S",
+    "PR",
+    "X",
+    "P",
+    "RFX",
+    "SNOT"
+   ],
+   "color": "#3b5ea8"
+  },
+  {
+   "id": "RETS",
+   "title": "Asset returns — measurement (L2)",
+   "nodes": [
+    "RET",
+    "LOG",
+    "MP",
+    "LADD",
+    "AM",
+    "GM",
+    "EAR",
+    "CC",
+    "INF",
+    "RX",
+    "REAL",
+    "EFF"
+   ],
+   "color": "#3f8a4f"
+  },
+  {
+   "id": "PORT",
+   "title": "Portfolios — linear combinations (L3)",
+   "nodes": [
+    "H",
+    "PF",
+    "ACC",
+    "W",
+    "RPF",
+    "IDX",
+    "PW",
+    "VW",
+    "FF",
+    "EW",
+    "PWR",
+    "NOREB",
+    "REB",
+    "MV"
+   ],
+   "color": "#b07b1e"
+  },
+  {
+   "id": "ARBS",
+   "title": "Prices & no-arbitrage (L4)",
+   "nodes": [
+    "R1",
+    "R2",
+    "P0",
+    "LIN",
+    "ARB",
+    "NA",
+    "NANOT",
+    "POS",
+    "LOOP",
+    "AD",
+    "Q",
+    "SPR",
+    "COMP",
+    "INC",
+    "REPL",
+    "UNQ",
+    "UNOT",
+    "MANY",
+    "SPAN",
+    "BOUND"
+   ],
+   "color": "#8e3b78"
+  },
+  {
+   "id": "SDFS",
+   "title": "Risk & the SDF (L5)",
+   "nodes": [
+    "M",
+    "PEQ",
+    "MVAL",
+    "MNOT",
+    "MU",
+    "MM",
+    "STRUCT",
+    "IMRS",
+    "RQ",
+    "ERQ",
+    "RFR",
+    "PREM",
+    "RISK",
+    "RNOT",
+    "SIGN",
+    "EQ",
+    "EMP"
+   ],
+   "color": "#b0413a"
+  },
+  {
+   "id": "FIA",
+   "title": "Zeros & spot rates (Fixed Income I)",
+   "nodes": [
+    "FI",
+    "DATED",
+    "ZERO",
+    "ZP",
+    "RFS",
+    "RFI",
+    "LONGR",
+    "SPOT",
+    "SPC",
+    "SPNOT"
+   ],
+   "color": "#2f6f7e"
+  },
+  {
+   "id": "FIB",
+   "title": "Coupon bonds & YTM (Fixed Income II)",
+   "nodes": [
+    "CB",
+    "CBZ",
+    "SPP",
+    "ONEN",
+    "YTM",
+    "YNOT",
+    "ANN",
+    "PAR",
+    "CONS",
+    "YC"
+   ],
+   "color": "#2f6f7e"
+  },
+  {
+   "id": "FIC",
+   "title": "Interest-rate risk (Fixed Income III)",
+   "nodes": [
+    "DISC",
+    "MD",
+    "DAP",
+    "MAC",
+    "DZ",
+    "DPR",
+    "PD",
+    "STB",
+    "EFD",
+    "CONV",
+    "DCA",
+    "CVI"
+   ],
+   "color": "#2f6f7e"
+  },
+  {
+   "id": "FID",
+   "title": "Forwards, credit & MBS (Fixed Income IV)",
+   "nodes": [
+    "FWD",
+    "FWP",
+    "FNOT",
+    "TP",
+    "BR",
+    "BR2",
+    "YSP",
+    "SSP",
+    "OAS",
+    "SPI",
+    "CDS",
+    "CDP",
+    "MBS",
+    "MBR",
+    "CMO",
+    "CMR"
+   ],
+   "color": "#2f6f7e"
+  }
+ ],
+ "nodes": {
+  "T": {
+   "type": "prim",
+   "label": "Time<br/>t = today → t+1, t+2, …",
+   "tags": "L1",
+   "details": [
+    "Finance = trading resources today for outcomes in the future.",
+    "Today is t; future dates are t+1, t+2, t+3, …",
+    "Prices are dated when they are paid. Payoffs are dated when they are received."
+   ]
+  },
+  "S": {
+   "type": "prim",
+   "label": "States of the world<br/>s = 1, …, S",
+   "tags": "L1·L4",
+   "details": [
+    "A set of S mutually exclusive and collectively exhaustive future states (boom/recession, high/low inflation, good/bad).",
+    "Each state is a complete description of all economically relevant outcomes at that date.",
+    "A label for a possible future: a bookkeeping device, not a prediction."
+   ]
+  },
+  "PR": {
+   "type": "prim",
+   "label": "Probabilities π<sub>s</sub><br/>π<sub>s</sub> #gt; 0, Σ π<sub>s</sub> = 1",
+   "tags": "L1·L4·L5",
+   "details": [
+    "A convenient way to summarize uncertainty over states.",
+    "No-arbitrage pricing restrictions do not need them; they first appear when the SDF is built.",
+    "Different choices of π give different (equivalent) SDF representations."
+   ]
+  },
+  "X": {
+   "type": "prim",
+   "label": "Asset ≡ payoff vector<br/>X = (X<sub>1</sub>, …, X<sub>S</sub>) ∈ ℝ<sup>S</sup>",
+   "tags": "L1·L4",
+   "details": [
+    "A contract that trades at t and delivers a payoff at a future date, contingent on the realized state.",
+    "X<sub>i,s</sub> is the payoff of asset i in state s. It is what you get, not what you pay.",
+    "Assets are defined by their payoffs, not their type: stocks, bonds, options and insurance differ only in what they pay and when.",
+    "Payoffs can have any sign. A negative X<sub>s</sub> means you must pay in state s.",
+    "Long and short positions are allowed. A short flips every sign: (−2, 5, 10) becomes (2, −5, −10).",
+    "Shapes: a <b>risk-free</b> bond pays the same in every state. A <b>stock</b> pays more in good states. <b>Insurance</b> pays more in bad states. An <b>option</b> pays 0 in some states and &gt; 0 in others."
+   ]
+  },
+  "P": {
+   "type": "prim",
+   "label": "Price P(X) ∈ ℝ<br/>paid today",
+   "tags": "L1·L4",
+   "details": [
+    "The amount paid today to receive the future payoff. A real number assigned to a list of state-contingent payoffs.",
+    "Prices are observable; future payoffs are uncertain.",
+    "Financial economics studies the relationship between prices today and payoffs tomorrow.",
+    "Prices and payoffs are the primitive objects of theory. Returns are what we analyze in data."
+   ]
+  },
+  "RFX": {
+   "type": "def",
+   "label": "Risk-free payoff<br/>X<sub>s</sub> = 1 in every state",
+   "tags": "L1·L5",
+   "details": [
+    "The same payoff in every state. Its gross return is 1 + R<sub>f</sub> = 1/P<sub>t</sub>, so P<sub>t</sub> = 1/(1 + R<sub>f</sub>)."
+   ]
+  },
+  "SNOT": {
+   "type": "not",
+   "label": "A state is NOT a forecast",
+   "tags": "L1",
+   "details": [
+    "States and probabilities are analytical devices, not forecasts or beliefs."
+   ]
+  },
+  "RET": {
+   "type": "def",
+   "label": "Simple return<br/>1 + R = X<sub>t+1</sub> / P<sub>t</sub>",
+   "tags": "L1·L2",
+   "details": [
+    "Stock payoff: X<sub>t+1</sub> = P<sub>t+1</sub> + D<sub>t+1</sub> (next price plus dividend).",
+    "Gross simple return: 1 + R<sub>t+1</sub> = (P<sub>t+1</sub> + D<sub>t+1</sub>)/P<sub>t</sub>. Net: R = X/P − 1.",
+    "A measurement convention derived from prices and payoffs. A higher return means more earned per dollar invested.",
+    "Annualizing is conventional: periods are usually years."
+   ],
+   "example": "MSFT: P = 27.66 (8/25/08), dividends 0.52, P = 24.64 (8/25/09). 1 + R = (24.64 + 0.52)/27.66 = 0.910, so R = −9.0%."
+  },
+  "LOG": {
+   "type": "conv",
+   "label": "Log return<br/>r = ln(1 + R)",
+   "tags": "L2",
+   "details": [
+    "Not a different economic object: the same payoff in different units, like meters instead of feet.",
+    "Used because logs add over time, not because investors think in logs.",
+    "For small R, ln(1 + R) ≈ R."
+   ],
+   "example": "ln(0.91) = −9.43% (vs −9%); ln(0.99) = −1.01% (vs −1%)."
+  },
+  "MP": {
+   "type": "def",
+   "label": "Multi-period (compound) return<br/>1 + R<sub>t,t+2</sub> = (1 + R<sub>t+1</sub>)(1 + R<sub>t+2</sub>)",
+   "tags": "L2",
+   "details": [
+    "Hold from t to t+1, reinvest dividends, hold to t+2."
+   ],
+   "example": "R<sub>t+1</sub> = 10%, R<sub>t+2</sub> = 20%: (1.1)(1.2) − 1 = 32%."
+  },
+  "LADD": {
+   "type": "res",
+   "label": "Log returns add over time<br/>r<sub>t,t+2</sub> = r<sub>t+1</sub> + r<sub>t+2</sub>",
+   "tags": "L2",
+   "details": [
+    "Logs turn products into sums. This is the whole reason log returns are used."
+   ]
+  },
+  "AM": {
+   "type": "conv",
+   "label": "Arithmetic mean<br/>Σ R<sub>i</sub> / n",
+   "tags": "L2",
+   "details": [
+    "Describes the expected single-period return.",
+    "There is no single “average return”. Each average answers a different question."
+   ],
+   "example": "Returns 30% then 0%: arithmetic mean = 15%. But 15% twice compounds to (1.15)² − 1 = 32.25%, while 30%-then-0% gives only 30%."
+  },
+  "GM": {
+   "type": "conv",
+   "label": "Geometric mean<br/>[Π (1 + R<sub>i</sub>)]<sup>1/n</sup> − 1",
+   "tags": "L2",
+   "details": [
+    "Solves (1 + R)ⁿ = Π(1 + R<sub>i</sub>). It describes the multi-period growth rate along the realized path.",
+    "In logs it is just the plain average: r̄ = (r<sub>1</sub> + … + r<sub>n</sub>)/n."
+   ],
+   "example": "30%, 0%: [(1.3)(1.0)]<sup>½</sup> − 1 = 14.02%."
+  },
+  "EAR": {
+   "type": "conv",
+   "label": "Effective annual rate<br/>EAR = (1 + APR/m)<sup>m</sup> − 1",
+   "tags": "L2",
+   "details": [
+    "Interest credited m times per year: bank accounts daily, mortgages and leases monthly, bonds semi-annually.",
+    "The quoted APR R differs from the EAR you actually earn or pay."
+   ],
+   "example": "$10,000 car loan at a 6.75% APR, compounded daily: EAR = (1 + .0675/365)<sup>365</sup> − 1 = 6.9824%. You owe $10,698.24 after one year."
+  },
+  "CC": {
+   "type": "res",
+   "label": "m → ∞: 1 + EAR = e<sup>r</sup><br/>continuous rate = log rate",
+   "tags": "L2",
+   "details": [
+    "lim (1 + R/m)<sup>m</sup> − 1 = e<sup>r</sup> − 1, so r = ln(1 + EAR) is the continuously compounded rate, also called the log rate.",
+    "This is a limit, not how assets actually pay. It is used because it turns products into sums and powers into exponentials.",
+    "Notation: capital R is a periodically compounded rate; lowercase r is a continuously compounded rate."
+   ],
+   "example": "Car loan compounded continuously: e<sup>.0675</sup> − 1 = 6.9830% → $10,698.30 (vs $10,698.24 daily)."
+  },
+  "INF": {
+   "type": "def",
+   "label": "Inflation<br/>1 + π<sub>t+1</sub> = CPI<sub>t+1</sub> / CPI<sub>t</sub><br/>⚠ this π ≠ probability π<sub>s</sub>",
+   "tags": "L2",
+   "details": [
+    "Measures the change in the purchasing power of $1. CPI = the average price of an urban consumer basket (BLS).",
+    "π &gt; 0 is inflation; π &lt; 0 is deflation.",
+    "⚠ Notation clash: π is also used for state probabilities. Context tells you which."
+   ]
+  },
+  "RX": {
+   "type": "def",
+   "label": "Real payoff<br/>X<sup>real</sup> = X / (1 + π)",
+   "tags": "L2",
+   "details": [
+    "Measures the payoff in today’s purchasing power. The notes first show this with wealth: W<sup>real</sup><sub>t+1</sub> = W<sub>t+1</sub>/(1 + π).",
+    "Nominal change in wealth (dollars) ≠ change in purchasing power."
+   ]
+  },
+  "REAL": {
+   "type": "res",
+   "label": "Real return<br/>1 + R<sup>real</sup> = (1 + R<sup>nom</sup>) / (1 + π)",
+   "tags": "L2",
+   "details": [
+    "1 + R<sup>real</sup> = X<sup>real</sup>/P<sub>t</sub>. Only the payoff is deflated; the price is already in today’s dollars."
+   ],
+   "example": "P<sub>t</sub> = 50, P<sub>t+1</sub> = 55, D = 0, CPI 72.6 → 82.4: π = 13.5%, R<sup>nom</sup> = 10%, X<sup>real</sup> = 55/1.135 = 48.46, R<sup>real</sup> = −3.08%."
+  },
+  "H": {
+   "type": "def",
+   "label": "Holdings a = (a<sub>1</sub>, …, a<sub>N</sub>)<br/>shares, long (+) or short (−)",
+   "tags": "L1·L3",
+   "details": [
+    "You can hold many assets at once, buying some and shorting others."
+   ]
+  },
+  "PF": {
+   "type": "def",
+   "label": "Portfolio = linear combination<br/>X<sub>p,s</sub> = Σ a<sub>i</sub>X<sub>i,s</sub> · P<sub>p</sub> = Σ a<sub>i</sub>P<sub>i</sub>",
+   "tags": "L1·L3",
+   "details": [
+    "Portfolio payoffs and prices are weighted sums of the individual pieces.",
+    "Mutual funds (e.g. Vanguard) are portfolios."
+   ]
+  },
+  "ACC": {
+   "type": "interp",
+   "label": "Linearity here is accounting,<br/>not an economic assumption",
+   "tags": "L1",
+   "details": [
+    "Because payoffs literally add, prices of combinations must add too. This is what the pricing rules in ④ formalize."
+   ]
+  },
+  "W": {
+   "type": "def",
+   "label": "Portfolio weights<br/>w<sub>i</sub> = a<sub>i</sub>P<sub>i</sub> / Σ a<sub>j</sub>P<sub>j</sub>",
+   "tags": "L3",
+   "details": [
+    "The share of wealth in asset i. The weights sum to 1."
+   ]
+  },
+  "RPF": {
+   "type": "key",
+   "label": "Portfolio return = weighted average<br/>R<sub>p</sub> = Σ w<sub>i</sub>R<sub>i</sub>",
+   "tags": "L3",
+   "details": [
+    "R<sub>p</sub> = (portfolio payoff at t+1)/(portfolio price at t) − 1.",
+    "Write (Σ a<sub>i</sub>X<sub>i</sub>)/(Σ a<sub>j</sub>P<sub>j</sub>) = Σ [a<sub>i</sub>P<sub>i</sub>/Σ a<sub>j</sub>P<sub>j</sub>]·(X<sub>i</sub>/P<sub>i</sub>). This gives 1 + R<sub>p</sub> = Σ w<sub>i</sub>(1 + R<sub>i</sub>), so R<sub>p</sub> = Σ w<sub>i</sub>R<sub>i</sub>.",
+    "It works for simple returns because payoffs add. It does NOT hold for log returns."
+   ],
+   "example": "40% MSFT (12.5%), 60% WMT (25%): 1 + R<sub>p</sub> = .4(1.125) + .6(1.25) = 1.20, so R<sub>p</sub> = 20%."
+  },
+  "IDX": {
+   "type": "def",
+   "label": "Index = portfolio + weight rule",
+   "tags": "L3",
+   "details": [
+    "A portfolio meant to represent the general market. It is described by which securities it holds and the weights on them."
+   ]
+  },
+  "PW": {
+   "type": "def",
+   "label": "Price-weighted<br/>w<sub>i</sub> = P<sub>i</sub> / Σ P<sub>j</sub>",
+   "tags": "L3",
+   "details": [
+    "E.g. the Dow Jones Industrial Average (30 large U.S. stocks)."
+   ]
+  },
+  "VW": {
+   "type": "def",
+   "label": "Value-weighted<br/>w<sub>i</sub> = V<sub>i</sub> / Σ V<sub>j</sub>, V<sub>i</sub> = n<sub>i</sub>P<sub>i</sub>",
+   "tags": "L3",
+   "details": [
+    "V<sub>i</sub> = market cap (n<sub>i</sub> = shares outstanding). More money goes into bigger companies.",
+    "E.g. Russell 1000, Russell 2000."
+   ]
+  },
+  "FF": {
+   "type": "def",
+   "label": "Free-float weighted<br/>value-weighted minus locked-up shares",
+   "tags": "L3",
+   "details": [
+    "Like value-weighted, but excludes shares held privately or by the government.",
+    "E.g. the S&amp;P 500 (500 large-cap U.S. firms: the large-cap segment, not the whole market) and the MSCI foreign-stock indexes."
+   ]
+  },
+  "EW": {
+   "type": "def",
+   "label": "Equal-weighted<br/>w<sub>i</sub> = 1/N",
+   "tags": "L3",
+   "details": [
+    "Equal dollars in each asset. E.g. the S&amp;P 500 Equal Weight and Nasdaq-100 Equal Weighted indexes."
+   ]
+  },
+  "PWR": {
+   "type": "res",
+   "label": "Price-weighted ⇒ equal number of shares<br/>index tracks the sum of prices",
+   "tags": "L3",
+   "details": [
+    "Shares of i = (P<sub>i</sub>/ΣP)·W/P<sub>i</sub> = W/ΣP, the same for every stock."
+   ],
+   "example": "$100; Historic $40 (100 sh outstanding), Present $20 (50 sh). Price-weighted: 40/60 and 20/60 → $66.67 and $33.33 → 1.67 sh of each. Equal-weighted: $50/$50 → 1.25 and 2.5 sh. Value-weighted: caps 4000 : 1000 → $80/$20 → 2 and 1 sh."
+  },
+  "NOREB": {
+   "type": "res",
+   "label": "Price- &amp; value-weighted:<br/>buy-and-hold, no rebalancing",
+   "tags": "L3",
+   "details": [
+    "Prices move the held shares’ values exactly as they move the index weights, so the portfolio stays on target by itself."
+   ]
+  },
+  "REB": {
+   "type": "res",
+   "label": "Equal-weighted ⇒ must rebalance",
+   "tags": "L3",
+   "details": [
+    "Price moves push the weights away from 1/N."
+   ],
+   "example": "Next year Historic $45 and Present $33: holding 1.25 and 2.5 sh, the weights drift to .4054 and .5946 (value $138.75). To get back to 1/2 each: 69.375/45 = 1.54 sh and 69.375/33 = 2.10 sh."
+  },
+  "R1": {
+   "type": "rule",
+   "label": "Rule 1 · prices add<br/>P(X + Y) = P(X) + P(Y)",
+   "tags": "L4",
+   "details": [
+    "Buying both assets pays (X<sub>1</sub>+Y<sub>1</sub>, …, X<sub>S</sub>+Y<sub>S</sub>) and costs the sum of the prices."
+   ]
+  },
+  "R2": {
+   "type": "rule",
+   "label": "Rule 2 · prices scale<br/>P(aX) = a P(X), a ∈ ℝ",
+   "tags": "L4",
+   "details": [
+    "Buy twice as much and you get twice the payoff in every state: P(2X) = 2P(X)."
+   ]
+  },
+  "P0": {
+   "type": "res",
+   "label": "P(0) = 0",
+   "tags": "L4",
+   "details": [
+    "P(X + 0) = P(X) + P(0), so P(0) = 0. A zero payoff has zero price."
+   ]
+  },
+  "LIN": {
+   "type": "key",
+   "label": "Linear pricing (through the origin)<br/>P(aX + bY) = aP(X) + bP(Y)",
+   "tags": "L4",
+   "details": [
+    "The first crucial modeling implication: rules 1 and 2 combined."
+   ]
+  },
+  "ARB": {
+   "type": "def",
+   "label": "Arbitrage (free lunch)<br/>X ≥ 0 in every state and P(X) #lt; 0,<br/>or X ≥ 0, some X<sub>s</sub> #gt; 0 and P(X) ≤ 0",
+   "tags": "L1·L4",
+   "details": [
+    "A trade that never loses money in any state and either pays you today or costs nothing and pays off in at least one state.",
+    "Case (i) includes the all-zero payoff: being paid today to receive nothing.",
+    "Intuition: it costs nothing, never loses, and sometimes makes money."
+   ]
+  },
+  "NA": {
+   "type": "rule",
+   "label": "No-arbitrage<br/>no such X exists",
+   "tags": "L1·L4",
+   "details": [
+    "Theory assumes arbitrage opportunities do not exist. The usual motivation is that they would be eliminated very quickly.",
+    "A basic consistency requirement: prices cannot allow free lunches."
+   ]
+  },
+  "NANOT": {
+   "type": "not",
+   "label": "NOT a behavioral claim, not about trader<br/>skill or market speed; needs no preferences,<br/>beliefs or equilibrium",
+   "tags": "L1·L4",
+   "details": [
+    "It is purely a logical restriction on which prices are allowed."
+   ]
+  },
+  "POS": {
+   "type": "key",
+   "label": "Positive pricing<br/>X = 0 ⇒ P = 0 · X ≥ 0, X ≠ 0 ⇒ P(X) #gt; 0",
+   "tags": "L4",
+   "details": [
+    "“This is the entire content of no-arbitrage.” In this setting no-arbitrage and positive pricing are equivalent."
+   ]
+  },
+  "LOOP": {
+   "type": "res",
+   "label": "Law of One Price<br/>X = Y state by state ⇒ P(X) = P(Y)",
+   "tags": "L4",
+   "details": [
+    "Prices depend only on payoffs, not on asset labels.",
+    "If LOOP fails, buy the cheap one and sell the expensive one for a riskless profit.",
+    "A consequence of no-arbitrage, not a separate rule."
+   ]
+  },
+  "AD": {
+   "type": "def",
+   "label": "Arrow–Debreu security e<sub>s</sub><br/>pays 1 in state s, 0 elsewhere",
+   "tags": "L1·L4",
+   "details": [
+    "A way of organizing prices. Such securities need not literally trade."
+   ]
+  },
+  "Q": {
+   "type": "def",
+   "label": "State price q<sub>s</sub> = P(e<sub>s</sub>)<br/>today’s value of $1 in state s",
+   "tags": "L1·L4",
+   "details": [
+    "“How much is a dollar worth in each future state?”"
+   ]
+  },
+  "SPR": {
+   "type": "key",
+   "label": "State-price representation<br/>∃ q<sub>1</sub>, …, q<sub>S</sub> #gt; 0 : P(X) = Σ q<sub>s</sub>X<sub>s</sub>",
+   "tags": "L1·L4·L5",
+   "details": [
+    "If prices are linear and rule out arbitrage, every asset price is a positively weighted sum of its state payoffs.",
+    "Not an assumption: with finitely many states and linear prices, this is the only form prices can take.",
+    "Existence comes from no-arbitrage. It does not say why each q<sub>s</sub> has the value it does."
+   ]
+  },
+  "COMP": {
+   "type": "rule",
+   "label": "Complete market<br/>traded assets can build any payoff",
+   "tags": "L4·L5",
+   "details": [
+    "Any pattern of payoffs across states can be created from traded assets.",
+    "Equations vs unknowns: each traded asset gives one equation P<sub>i</sub> = Σ<sub>s</sub> q<sub>s</sub>X<sub>i,s</sub>, and there are S unknowns q<sub>1</sub>…q<sub>S</sub>. Complete means S <i>independent</i> equations, so exactly one solution.",
+    "Linear algebra: the payoff vectors span ℝ<sup>S</sup> (rank S). That needs S independent assets, not that <i>every</i> asset is independent. A redundant asset, like a fund of other assets, adds no new equation; LOOP already fixes its price."
+   ],
+   "example": "2 states. Bond (1, 1) costs 0.95; asset A (1.2, 0.8) costs 0.92. Then q<sub>1</sub> + q<sub>2</sub> = 0.95 and 1.2q<sub>1</sub> + 0.8q<sub>2</sub> = 0.92 give q = (0.40, 0.55) and nothing else."
+  },
+  "INC": {
+   "type": "rule",
+   "label": "Incomplete market<br/>some payoffs cannot be built",
+   "tags": "L4·L5",
+   "details": [
+    "Fewer independent payoff vectors than states, so fewer equations than unknowns and a whole family of q’s.",
+    "Real markets are generally incomplete."
+   ],
+   "example": "3 states. Bond (1, 1, 1) costs 0.90; stock (0, 1, 2) costs 0.80. Set q<sub>3</sub> = t; then q<sub>2</sub> = 0.8 − 2t and q<sub>1</sub> = 0.1 + t, and positivity requires 0 #lt; t #lt; 0.4. For example, t = 0.1 gives q = (0.2, 0.6, 0.1) and t = 0.3 gives q = (0.4, 0.2, 0.3). Both price the bond and the stock exactly."
+  },
+  "REPL": {
+   "type": "res",
+   "label": "Every AD security can be replicated<br/>⇒ each q<sub>s</sub> is forced by LOOP",
+   "tags": "L4",
+   "details": [
+    "This is <i>why</i> completeness gives uniqueness. Build $1-in-state-s from traded assets; its price is q<sub>s</sub>, and any other q would let you arbitrage the replicating portfolio."
+   ],
+   "example": "Bond (1, 1) at 0.95 and A (1.2, 0.8) at 0.92.<br/>(1, 0) = −2·bond + 2.5·A, so q<sub>1</sub> = −2(.95) + 2.5(.92) = 0.40.<br/>(0, 1) = 3·bond − 2.5·A, so q<sub>2</sub> = 3(.95) − 2.5(.92) = 0.55."
+  },
+  "UNQ": {
+   "type": "res",
+   "label": "q is unique<br/>(pinned down by asset prices)",
+   "tags": "L4",
+   "details": [
+    "Exactly one state-price vector is consistent with all observed asset prices. The data leaves no freedom.",
+    "Existence ⇐ no-arbitrage. Uniqueness ⇐ completeness.",
+    "The pricing rule then extends to every contingent claim (PS2 Q7b)."
+   ]
+  },
+  "UNOT": {
+   "type": "not",
+   "label": "“Unique” does NOT mean “true” or<br/>“correct”, only pinned down by the data",
+   "tags": "L4",
+   "details": [
+    "Uniqueness is a statement about how much observed prices restrict q, not about whether those prices are “right”."
+   ]
+  },
+  "MANY": {
+   "type": "res",
+   "label": "Many q fit observed prices",
+   "tags": "L4",
+   "details": [
+    "Several state-price vectors are consistent with the same prices, so the market cannot tell them apart.",
+    "This matters only for payoffs you cannot build (see the two nodes below)."
+   ]
+  },
+  "SPAN": {
+   "type": "res",
+   "label": "Buildable payoffs: one price<br/>under every valid q",
+   "tags": "L4",
+   "details": [
+    "Anything in the span of traded assets has a single price that LOOP forces. Every member of the q family agrees on it."
+   ],
+   "example": "In the 3-state example, 2·bond − stock = (2, 1, 0) costs 1.8 − 0.8 = 1.0. Check: q = (0.2, 0.6, 0.1) gives 0.4 + 0.6 = 1.0; q = (0.4, 0.2, 0.3) gives 0.8 + 0.2 = 1.0."
+  },
+  "BOUND": {
+   "type": "res",
+   "label": "Unbuildable payoffs: only a range<br/>(no-arbitrage bounds, not a number)",
+   "tags": "L4",
+   "details": [
+    "If a payoff cannot be replicated, its price depends on which q you pick. No-arbitrage (all q<sub>s</sub> #gt; 0) still restricts it to an interval."
+   ],
+   "example": "3-state example: the AD security (1, 0, 0) costs q<sub>1</sub> = 0.1 + t with 0 #lt; t #lt; 0.4, so anywhere in (0.1, 0.5)."
+  },
+  "M": {
+   "type": "def",
+   "label": "Stochastic discount factor<br/>m<sub>s</sub> = q<sub>s</sub> / π<sub>s</sub>",
+   "tags": "L1·L4·L5",
+   "details": [
+    "Built from state prices and probabilities. Also called the state-price density or pricing kernel.",
+    "A state-contingent weight vector that summarizes how prices weight payoffs across states, i.e. how risk is priced.",
+    "All asset pricing models differ only in how they specify, interpret or estimate m."
+   ]
+  },
+  "PEQ": {
+   "type": "key",
+   "label": "Pricing as an expectation<br/>P(X) = E<sub>π</sub>[mX] = Σ π<sub>s</sub>m<sub>s</sub>X<sub>s</sub>",
+   "tags": "L1·L4·L5",
+   "details": [
+    "Substitute q<sub>s</sub> = π<sub>s</sub>m<sub>s</sub> into P = Σ q<sub>s</sub>X<sub>s</sub>.",
+    "Given π, this is an equivalent representation of no-arbitrage."
+   ]
+  },
+  "MVAL": {
+   "type": "interp",
+   "label": "m<sub>s</sub> = how much the market values $1 in s<br/>high m ⇒ “bad” state, payoffs worth more",
+   "tags": "L1·L5",
+   "details": [
+    "High m<sub>s</sub>: dollars in state s are more valuable. Low m<sub>s</sub>: less valuable.",
+    "Payoffs delivered in high-value states get more weight in pricing.",
+    "This reading uses only prices and no-arbitrage, with no assumptions about behavior."
+   ]
+  },
+  "MNOT": {
+   "type": "not",
+   "label": "m is NOT a probability, a price,<br/>a belief, a return, or a utility function",
+   "tags": "L1·L5",
+   "details": [
+    "It is a weight vector, nothing more."
+   ]
+  },
+  "MU": {
+   "type": "res",
+   "label": "m is unique (given π)",
+   "tags": "L5",
+   "details": [
+    "A complete market fixes q uniquely; any choice of π then fixes m uniquely."
+   ]
+  },
+  "MM": {
+   "type": "res",
+   "label": "m is not unique<br/>⇒ approximate one that prices assets well",
+   "tags": "L5",
+   "details": [
+    "Even under the true probabilities, markets are generally incomplete, so the SDF is not pinned down.",
+    "Setting π = the true measure only selects one representation among many that generate the same prices.",
+    "Empirical asset pricing therefore aims to approximate an SDF that prices observed assets well."
+   ]
+  },
+  "STRUCT": {
+   "type": "interp",
+   "label": "Arbitrage says q exists, not why q<sub>s</sub><br/>is what it is ⇒ need economic structure",
+   "tags": "L5",
+   "details": [
+    "Even in a complete market, arbitrage does not explain the economic content of the SDF."
+   ]
+  },
+  "IMRS": {
+   "type": "interp",
+   "label": "IMRS reading<br/>m<sub>s,t+1</sub> ∝ u′(c<sub>s,t+1</sub>) / u′(c<sub>t</sub>)",
+   "tags": "L5",
+   "details": [
+    "The intertemporal marginal rate of substitution: how preferences value an extra unit of payoff across dates and states.",
+    "m is high where marginal utility is high.",
+    "Preferences help interpret the SDF; they do not determine it."
+   ]
+  },
+  "RQ": {
+   "type": "res",
+   "label": "1 = E[m(1 + R)]",
+   "tags": "L5",
+   "details": [
+    "Divide P(X) = E[mX] by P(X) and use X/P(X) = 1 + R."
+   ]
+  },
+  "ERQ": {
+   "type": "res",
+   "label": "E[1 + R] = 1/E[m] − Cov(m, R)/E[m]",
+   "tags": "L5",
+   "details": [
+    "Use Cov(Y, Z) = E[YZ] − E[Y]E[Z]: 1 = E[m]E[1 + R] + Cov(m, 1 + R), and Cov(m, 1 + R) = Cov(m, R).",
+    "“The core pricing intuition of the entire course: prices reward assets for delivering payoffs in valuable states.”"
+   ]
+  },
+  "RFR": {
+   "type": "res",
+   "label": "E[m] = 1 / (1 + R<sub>f</sub>)",
+   "tags": "L5",
+   "details": [
+    "Price the risk-free payoff: 1/(1 + R<sub>f</sub>) = E[m·1]. Here m prices payoffs at t+1 relative to t."
+   ]
+  },
+  "PREM": {
+   "type": "key",
+   "label": "Risk premium<br/>E[R] − R<sub>f</sub> = −Cov(m, R) / E[m]",
+   "tags": "L1·L5",
+   "details": [
+    "Substitute 1/E[m] = 1 + R<sub>f</sub> and subtract 1 + R<sub>f</sub> from both sides."
+   ],
+   "example": "Two states, π<sub>G</sub> = π<sub>B</sub> = ½, m = (0.8, 1.1), so E[m] = .95 and R<sub>f</sub> = 5.26%.<br/>Asset A pays (1.2, 0.8): P = .5(.8·1.2 + 1.1·.8) = 0.92; 1 + R = (1.3043, 0.8696); E[R] = 8.70%; Cov(m, R<sub>A</sub>) = −.0326.<br/>Asset B pays (0.8, 1.2): P = 0.98; 1 + R = (0.8163, 1.2245); E[R] = 2.04%; Cov = +.0306.<br/>Both have E[X] = 1. Their prices differ only because of which state pays."
+  },
+  "RISK": {
+   "type": "interp",
+   "label": "Risk ≡ covariance with m",
+   "tags": "L1·L5",
+   "details": [
+    "Risk is about how payoffs line up with bad states of the world.",
+    "Assets earn higher expected returns if they perform poorly when times are bad, or make bad outcomes worse."
+   ]
+  },
+  "RNOT": {
+   "type": "not",
+   "label": "Risk is NOT variance / volatility per se,<br/>and NOT downside risk by itself",
+   "tags": "L1·L5",
+   "details": [
+    "Two assets with the same volatility can carry opposite risk premia (see the A/B example)."
+   ]
+  },
+  "SIGN": {
+   "type": "interp",
+   "label": "Cov #lt; 0 (pays when m low) ⇒ E[R] #gt; R<sub>f</sub><br/>Cov #gt; 0 (pays when m high) ⇒ E[R] #lt; R<sub>f</sub>, insurance-like",
+   "tags": "L5",
+   "details": [
+    "Negative covariance: the asset pays off where an extra unit is least valuable, so it must offer a premium (asset A).",
+    "Positive covariance: the asset pays off where an extra unit is most valuable, so it can offer less than R<sub>f</sub> (asset B).",
+    "The link between “m low” and “good times” holds “under mild assumptions”."
+   ]
+  },
+  "FI": {
+   "type": "def",
+   "label": "Fixed income<br/>contractual cash flows at specified dates",
+   "tags": "FI I",
+   "details": [
+    "Assets that promise contractually specified cash flows at specified dates: Treasuries, corporate bonds, mortgages, MBS/CMOs, ABS/CDOs, and derivatives on these.",
+    "Cash flows are dated (timing matters) and often state-contingent in practice.",
+    "Markets quote yields and spreads, which are different representations of prices.",
+    "Not a niche: global debt is roughly $140–150T, versus $120–130T of global equity."
+   ]
+  },
+  "DATED": {
+   "type": "def",
+   "label": "Dated pricing equation<br/>P<sub>t</sub>(X<sub>t+T</sub>) = E<sub>t</sub>[m<sub>t+T</sub>X<sub>t+T</sub>]",
+   "tags": "FI I",
+   "details": [
+    "The SDF pricing equation with a second dimension, horizon T. m<sub>s,t+T</sub> = how much we value a dollar in state s at t+T.",
+    "Prices are dated when paid, payoffs when received (core objects). Interpretation is identical to the one-period SDF."
+   ]
+  },
+  "ZERO": {
+   "type": "def",
+   "label": "Zero-coupon bond<br/>pays face value at t+T, nothing before",
+   "tags": "FI I · FI II",
+   "details": [
+    "Characterized by a face value, a maturity date t+T and a price at t. No cash flows until maturity.",
+    "The risk-free zero with face $1 pays $1 in every state at t+T: a <b>dated sure dollar</b>.",
+    "U.S. Treasuries are the closest real-world example: default-free in nominal terms, highly liquid, the benchmark. Treasury bills (≤ 1 yr) are zeros; stripped Treasuries (STRIPS) give longer zeros."
+   ]
+  },
+  "ZP": {
+   "type": "key",
+   "label": "Zero price = SDF mean at horizon T<br/>P<sub>t</sub>(T) = E<sub>t</sub>[m<sub>t,t+T</sub>]",
+   "tags": "FI I",
+   "details": [
+    "The primitive term-structure object. Every other fixed-income quantity (spot rates, yields, forwards, duration) is built from or summarizes these prices.",
+    "The spot curve is therefore a collection of SDF moments at different horizons."
+   ]
+  },
+  "RFS": {
+   "type": "res",
+   "label": "Short rate<br/>1 + R<sub>f</sub> = 1/P<sub>t</sub>(1) = 1/E<sub>t</sub>[m<sub>t+1</sub>]",
+   "tags": "FI I · L5",
+   "details": [
+    "The one-period zero’s gross return is the gross risk-free rate, also called the short rate. It comes from the mean of the SDF."
+   ],
+   "example": "P(1) = 0.95 ⇒ R<sub>f</sub> = S<sub>1</sub> = 1/0.95 − 1 = 5.26%."
+  },
+  "RFI": {
+   "type": "interp",
+   "label": "High E[m] ⇒ safe $ tomorrow is dear ⇒ low R<sub>f</sub>",
+   "tags": "FI I",
+   "details": [
+    "A safe dollar tomorrow becomes more valuable when tomorrow looks worse, riskier or harder to insure against: bad economic news (recession risk, lower income, negative productivity), higher uncertainty (crises, geopolitical shocks, pandemics), tighter borrowing (credit crunches, banking stress), or more demand for safety (demographics, regulation).",
+    "Then demand for safe claims rises, they cost more today, and R<sub>f</sub> falls. Low E[m] works the other way."
+   ]
+  },
+  "LONGR": {
+   "type": "interp",
+   "label": "“Risk-free” long bond is still risky<br/>if sold before maturity",
+   "tags": "FI I",
+   "details": [
+    "“Risk-free” means no default risk: held to maturity it surely pays $1.",
+    "Before maturity its price depends on discounting, which changes with (i) the time value of money and (ii) changing assessments of future states. So its one-period return is risky.",
+    "A long bond (maturity &gt; 1 period) moves when the market’s valuation of future dollars changes. This is formalized as duration and convexity."
+   ]
+  },
+  "SPOT": {
+   "type": "conv",
+   "label": "Spot rate S<sub>T</sub><br/>P<sub>t</sub>(T) = 1/(1 + S<sub>T</sub>)<sup>T</sup>",
+   "tags": "FI I · FI II",
+   "details": [
+    "The constant per-period rate that matches the zero’s price: S<sub>T</sub> = (1/P<sub>t</sub>(T))<sup>1/T</sup> − 1.",
+    "Rates are quoted in practice, but all economic content lives in prices. Spot rates are a conventional way of reporting them."
+   ],
+   "example": "P(2) = 0.90 ⇒ S<sub>2</sub> = (1/0.9)<sup>½</sup> − 1 = 5.41%. With P(1), P(2), P(3) = 0.95, 0.90, 0.84: S<sub>1</sub> = 5.26%, S<sub>2</sub> = 5.41%, S<sub>3</sub> = 5.98%."
+  },
+  "SPC": {
+   "type": "def",
+   "label": "Spot curve<br/>S<sub>T</sub> plotted against T",
+   "tags": "FI I",
+   "details": [
+    "Summarizes how expensive it is today to buy sure dollars at different future dates. Equivalent object: the zero-coupon price curve P<sub>t</sub>(T) vs T.",
+    "Need not be monotone: it can slope up or down, be flat, or be humped (PS3: no-arbitrage does not force monotonicity; P(T) falls with T only if rates are nonnegative)."
+   ]
+  },
+  "SPNOT": {
+   "type": "not",
+   "label": "Spot rates are NOT primitives:<br/>a translation of zero prices",
+   "tags": "FI I",
+   "details": [
+    "Primitive: prices P<sub>t</sub>(T) (equivalently E<sub>t</sub>[m<sub>t+T</sub>]). Representation: spot rates {S<sub>T</sub>}."
+   ]
+  },
+  "CB": {
+   "type": "def",
+   "label": "Coupon bond<br/>coupon C each period + face F at T",
+   "tags": "FI II",
+   "details": [
+    "Coupon rate = C/F (quoted as a % of face). T = time to maturity.",
+    "Treasury notes: 1–10 years; Treasury bonds: &gt; 10 years. Corporates (e.g. Nike) also carry ratings (Moody’s / S&amp;P)."
+   ]
+  },
+  "CBZ": {
+   "type": "key",
+   "label": "Coupon bond = portfolio of zeros<br/>P<sub>t</sub> = Σ CF<sub>s</sub>·P<sub>t</sub>(s)",
+   "tags": "FI II · FI III",
+   "details": [
+    "Hold C units of the 1-period zero, C of the 2-period, …, C + F of the T-period zero: identical cash flows at every date and state, so identical price.",
+    "No preferences or yields required; it follows directly from no-arbitrage. Coupon bonds introduce no new pricing logic.",
+    "The most transparent way to price a coupon bond."
+   ]
+  },
+  "SPP": {
+   "type": "res",
+   "label": "Spot-curve pricing<br/>P = Σ CF<sub>s</sub>/(1 + S<sub>s</sub>)<sup>s</sup>",
+   "tags": "FI II",
+   "details": [
+    "A representation of Σ CF<sub>s</sub>·P<sub>t</sub>(s), not a new pricing rule. Each cash flow is discounted at its own maturity-specific rate."
+   ],
+   "example": "5-yr bond, C = 50, F = 1000, spot rates 3.5, 4.5, 5.0, 5.5, 6.0%: P = 50/1.035 + 50/1.045² + 50/1.05³ + 50/1.055⁴ + 1050/1.06⁵ = 962.27."
+  },
+  "ONEN": {
+   "type": "not",
+   "label": "One discount rate for all cash flows<br/>is NOT how prices are set",
+   "tags": "FI II",
+   "details": [
+    "Spot rates generally differ across maturities, so different cash flows are discounted differently. One rate hides which maturities drive value.",
+    "PS3: with an upward-sloping curve, discounting everything at the long rate over-discounts the early cash flows and understates the price."
+   ]
+  },
+  "YTM": {
+   "type": "conv",
+   "label": "Yield to maturity R<br/>P = Σ CF<sub>s</sub>/(1 + R)<sup>s</sup>",
+   "tags": "FI II",
+   "details": [
+    "The single number that reproduces the price: an internal rate of return, a summary of a price.",
+    "Not solvable analytically in general; found by root finding.",
+    "We care because markets quote yields, returns are reported in yield terms, and duration and convexity are defined in yield space. But yields always come after prices."
+   ],
+   "example": "The 962.27 bond above: R = 5.89%."
+  },
+  "YNOT": {
+   "type": "not",
+   "label": "YTM is NOT a discount rate the market uses,<br/>NOT a primitive, NOT tied directly to the SDF",
+   "tags": "FI II",
+   "details": [
+    "“Spot rates price cash flows; yields summarize prices.”"
+   ]
+  },
+  "ANN": {
+   "type": "res",
+   "label": "Level-coupon form<br/>P = (C/R)(1 − (1+R)<sup>−T</sup>) + F/(1+R)<sup>T</sup>",
+   "tags": "FI II",
+   "details": [
+    "Compact bond price when every cash flow is discounted at the single yield R."
+   ]
+  },
+  "PAR": {
+   "type": "res",
+   "label": "Par bond: coupon rate = YTM ⇒ P = F",
+   "tags": "FI II",
+   "details": [
+    "Plug C/F = R into the level-coupon form and P = F.",
+    "Discount bonds: P &lt; F (coupon rate &lt; YTM). Premium bonds: P &gt; F (coupon rate &gt; YTM)."
+   ]
+  },
+  "CONS": {
+   "type": "res",
+   "label": "Consol (perpetuity)<br/>P = C/R",
+   "tags": "FI II",
+   "details": [
+    "No maturity and no terminal payment: take T → ∞ in the level-coupon form (assuming R &gt; 0)."
+   ]
+  },
+  "YC": {
+   "type": "def",
+   "label": "Yield curve / term structure<br/>YTM plotted against maturity",
+   "tags": "FI II",
+   "details": [
+    "A summary of bond prices, typically upward sloping but with many possible shapes.",
+    "“Term structure” can mean the on-the-run yield curve (most recently issued Treasuries) or the spot curve (from stripped Treasury prices). We price with the spot curve; yields come afterward.",
+    "Term-structure changes hit bonds differently depending on the timing of their cash flows: interest-rate risk."
+   ]
+  },
+  "DISC": {
+   "type": "def",
+   "label": "Discounting changes ⇒ zero prices move<br/>(“rates move” is shorthand)",
+   "tags": "FI III",
+   "details": [
+    "Reasons: expectations evolve (growth, inflation, risk), time passes, policy paths clarify, risk assessments change, preferences or technology drift, economic surprises.",
+    "The value of a future dollar can change even without surprises.",
+    "The primitive that moves is P<sub>t</sub>(T) = E<sub>t</sub>[m<sub>t,t+T</sub>]; spot rates move because they are defined from prices.",
+    "A coupon bond’s interest-rate risk is inherited from its zero components."
+   ]
+  },
+  "MD": {
+   "type": "def",
+   "label": "Modified duration<br/>D* = −(1/P)·dP/dR",
+   "tags": "FI III",
+   "details": [
+    "A local sensitivity (a derivative), computed from cash flows and the yield-based price representation.",
+    "Converts a small change in rates into an approximate % change in price."
+   ]
+  },
+  "DAP": {
+   "type": "key",
+   "label": "Duration approximation<br/>ΔP/P ≈ −D*·ΔR",
+   "tags": "FI III",
+   "details": [
+    "First-order: price moves opposite to yields, scaled by D*. In dollars: ΔP ≈ −D*·P·ΔR."
+   ],
+   "example": "D* = 6, yields up 50 bp (0.005): ΔP/P ≈ −6 × 0.005 = −3%."
+  },
+  "MAC": {
+   "type": "def",
+   "label": "Macaulay duration<br/>D = Σ s·w<sub>s</sub>, w<sub>s</sub> = [CF<sub>s</sub>/(1+R)<sup>s</sup>]/P",
+   "tags": "FI III",
+   "details": [
+    "A PV-weighted average maturity, sometimes called the bond’s “effective” maturity. The weights sum to 1.",
+    "Related to modified duration by D* = D/(1 + R)."
+   ]
+  },
+  "DZ": {
+   "type": "res",
+   "label": "Zero: D = T, D* = T/(1+R)<br/>coupon bond: D #lt; T",
+   "tags": "FI III",
+   "details": [
+    "Longer maturity ⇒ larger duration ⇒ more interest-rate risk.",
+    "Coupons pull cash flows forward, reducing the PV-weighted average maturity.",
+    "Concept check (FI II): a 5-yr zero is more sensitive to long-horizon discounting than a 5-yr coupon bond, because all its PV sits at t+5."
+   ]
+  },
+  "DPR": {
+   "type": "res",
+   "label": "Duration rules<br/>↑ with maturity · ↓ with coupon · ↓ with yield",
+   "tags": "FI III",
+   "details": [
+    "1. A zero’s Macaulay duration equals its TTM. 2. Same TTM: lower coupon ⇒ higher duration. 3. Same coupon: duration generally rises with TTM. 4. All else equal, duration is inversely related to yield."
+   ]
+  },
+  "PD": {
+   "type": "res",
+   "label": "Portfolio D* = Σ (value weight)·D*<sub>i</sub>",
+   "tags": "PS4",
+   "details": [
+    "Given as a hint in PS4. Used to hedge: match dollar durations, D*<sub>A</sub>·$A = D*<sub>L</sub>·$L, so asset and liability values change by the same amount."
+   ]
+  },
+  "STB": {
+   "type": "def",
+   "label": "Rate moves: shift · twist · butterfly",
+   "tags": "FI III",
+   "details": [
+    "Shift: all spot rates move by the same amount (parallel). Twist: slope changes (short and long rates move opposite ways). Butterfly: curvature changes (short and long vs medium).",
+    "Under a parallel shift, longer-duration bonds move more. Under a twist or butterfly, it depends on where the bond’s PV sits across maturities."
+   ]
+  },
+  "EFD": {
+   "type": "def",
+   "label": "Effective duration<br/>D<sub>eff</sub> = −(1/P)·(P<sub>+</sub> − P<sub>−</sub>)/(2Δx)",
+   "tags": "FI III",
+   "details": [
+    "Shift the whole spot curve up and down by Δx, reprice to get P<sub>+</sub>, P<sub>−</sub>. Sensitivity to the primitive curve rather than to the derived yield; needs no single-yield representation. ΔP/P ≈ −D<sub>eff</sub>·Δx.",
+    "Shift, twist and butterfly durations are effective durations under the corresponding curve moves; they are central to bond risk management."
+   ]
+  },
+  "CONV": {
+   "type": "def",
+   "label": "Convexity<br/>C = (1/P)·d²P/dR²",
+   "tags": "FI III",
+   "details": [
+    "Bond prices are nonlinear (typically convex) in yield, so duration is only first-order.",
+    "C = [1/(1+R)²]·Σ (s² + s)·w<sub>s</sub>, with the same PV weights as Macaulay duration."
+   ]
+  },
+  "DCA": {
+   "type": "key",
+   "label": "Second-order approximation<br/>ΔP/P ≈ −D*ΔR + ½C(ΔR)²",
+   "tags": "FI III",
+   "details": [
+    "Adds the convexity correction to the duration line."
+   ],
+   "example": "D* = 6, C = 60: ΔR = +1% ⇒ −0.06 + 0.003 = −5.7%; ΔR = −1% ⇒ +0.06 + 0.003 = +6.3%. Equal moves give asymmetric price changes."
+  },
+  "CVI": {
+   "type": "interp",
+   "label": "Positive convexity is desirable:<br/>price falls less and rises more",
+   "tags": "FI III",
+   "details": [
+    "The convexity term is always positive for plain bonds, so it helps the holder in both directions. It is tiny for small moves (10 bp) and matters for large ones (200 bp, PS4)."
+   ]
+  },
+  "FWD": {
+   "type": "def",
+   "label": "Forward rate f<sub>s,T</sub><br/>(1+S<sub>T</sub>)<sup>T</sup> = (1+S<sub>s</sub>)<sup>s</sup>(1+f<sub>s,T</sub>)<sup>T−s</sup>",
+   "tags": "FI IV",
+   "details": [
+    "Two strategies: buy a T-period zero, or buy an s-period zero and roll over for T − s periods. No-arbitrage equates them.",
+    "Many derivatives are written on forward rates: FRAs lock in a future rate, swaps exchange fixed for floating, caps and floors are options on future short rates. Forwards are the natural language of interest-rate risk."
+   ]
+  },
+  "FWP": {
+   "type": "res",
+   "label": "f<sub>s,T</sub> = (P(s)/P(T))<sup>1/(T−s)</sup> − 1",
+   "tags": "FI IV",
+   "details": [
+    "Forward rates are determined entirely by zero prices. One-year forward: f<sub>s,s+1</sub> = P(s)/P(s+1) − 1; and f<sub>0,1</sub> = S<sub>1</sub>."
+   ]
+  },
+  "FNOT": {
+   "type": "not",
+   "label": "f is NOT the expected future short rate",
+   "tags": "FI IV",
+   "details": [
+    "The future short rate is uncertain at t, so the rollover strategy is risky."
+   ]
+  },
+  "TP": {
+   "type": "interp",
+   "label": "f = E<sub>t</sub>[future short rate] + term premium<br/>since Cov(m, R<sub>roll</sub>) #lt; 0",
+   "tags": "FI IV",
+   "details": [
+    "The rollover strategy tends to earn high returns in good states (low m) and low returns in bad states (high m), so it requires compensation. This is the risk-premium logic of L5 applied across time."
+   ]
+  },
+  "BR": {
+   "type": "def",
+   "label": "Sources of bond risk (8)",
+   "tags": "FI IV",
+   "details": [
+    "<b>Interest-rate (market)</b>: price moves opposite to rates. <b>Reinvestment</b>: YTM assumes coupons are reinvested; interest-on-interest depends on future rates.",
+    "<b>Call</b>: issuer can retire early, so cash flows are uncertain, the bond is called when rates fall (reinvestment risk), and price upside is capped near the call price.",
+    "<b>Inflation</b>: purchasing power of cash flows. <b>Exchange-rate</b>: non-dollar bonds have uncertain dollar cash flows.",
+    "<b>Liquidity</b>: ease of selling near value; measured by the bid–ask spread. <b>Volatility</b>: higher rate volatility raises embedded-option value and lowers the bond’s value.",
+    "<b>Default (credit)</b>: issuer can’t make timely P&amp;I payments. Rated by S&amp;P, Moody’s, Fitch; Moody’s also estimates expected default frequency (EDF)."
+   ]
+  },
+  "BR2": {
+   "type": "interp",
+   "label": "All bond risks = uncertain discounting<br/>or uncertain cash flows",
+   "tags": "FI IV",
+   "details": [
+    "Interest-rate and reinvestment risk: discounting. Inflation and FX: real value of promised cash flows. Call and volatility: embedded options make cash flows state-contingent. Default: cash flows cut in some states. Liquidity: may not sell at fundamental value."
+   ]
+  },
+  "YSP": {
+   "type": "def",
+   "label": "Yield spread<br/>x = R<sub>corp</sub> − R<sub>Treas</sub>",
+   "tags": "FI IV",
+   "details": [
+    "The constant added to a comparable Treasury’s yield to reproduce the corporate bond’s price: P<sub>corp</sub> = Σ CF<sub>s</sub>/(1 + R<sub>Treas</sub> + x)<sup>s</sup>.",
+    "A Microsoft bond and a Treasury with the same maturity and coupon don’t sell for the same price: the corporate adds at least default and liquidity risk."
+   ]
+  },
+  "SSP": {
+   "type": "def",
+   "label": "Static spread<br/>x added to the whole spot curve",
+   "tags": "FI IV",
+   "details": [
+    "P<sub>corp</sub> = Σ CF<sub>s</sub>/(1 + S<sub>s</sub> + x)<sup>s</sup>. Like the yield spread, computable directly from observed prices."
+   ]
+  },
+  "OAS": {
+   "type": "def",
+   "label": "Option-adjusted spread (OAS)<br/>model-based, for embedded options",
+   "tags": "FI IV",
+   "details": [
+    "The constant shift of the Treasury spot curve that makes a pricing model (which values the embedded option, e.g. a call) match the market price.",
+    "Model-dependent: not directly observable from price alone."
+   ]
+  },
+  "SPI": {
+   "type": "interp",
+   "label": "Spread = every risk a Treasury doesn’t have<br/>(default ≈ biggest part, but only a rough gauge)",
+   "tags": "FI IV",
+   "details": [
+    "The static spread and OAS are often just called “the spread”. A CDS price quantifies default risk more precisely."
+   ]
+  },
+  "CDS": {
+   "type": "def",
+   "label": "Credit default swap<br/>insurance against default",
+   "tags": "FI IV",
+   "details": [
+    "Protection buyer pays a periodic premium; protection seller pays if a credit event occurs (bankruptcy/insolvency/payment default, a stipulated price fall, or a rating downgrade).",
+    "Payment: par minus post-default price, or par in exchange for physical delivery of the defaulted asset. Traded OTC (private contracts)."
+   ]
+  },
+  "CDP": {
+   "type": "res",
+   "label": "One-period CDS<br/>X = p(1 − Z) ⇒ p = X/(1 − Z)",
+   "tags": "FI IV",
+   "details": [
+    "Premium X paid up front; expected payoff p(1 − Z), with p = default probability and Z = recovery rate. X is set so the swap has zero value at inception."
+   ],
+   "example": "X = 200 bp, Z = 40%: p = 0.02/0.6 = 3.33%."
+  },
+  "MBS": {
+   "type": "def",
+   "label": "Mortgage-backed security<br/>cash flows from a pool of mortgages",
+   "tags": "FI IV",
+   "details": [
+    "Banks sell mortgage loans (assets funded by deposits) to free up lending. Agencies (Fannie Mae, Freddie Mac) pool them and sell the MBS; they backed ~70% of the market in 2023. Subprime was securitized privately without a guarantee.",
+    "<b>Pass-through</b>: all P&amp;I passed to investors, minus servicing and guarantee fees.",
+    "Scale: ~$12–13T of MBS (≈ 20–25% of the U.S. bond market), vs Treasuries $25–27T, corporates $10–11T, munis $4–5T."
+   ]
+  },
+  "MBR": {
+   "type": "res",
+   "label": "MBS risks: default (agency-guaranteed)<br/>+ prepayment: contraction / extension",
+   "tags": "FI IV",
+   "details": [
+    "Agency MBS investors are protected from homeowner default by the guarantee. All MBS investors face prepayment risk: contraction (prepayments speed up when rates fall) and extension (prepayments slow when rates rise)."
+   ]
+  },
+  "CMO": {
+   "type": "def",
+   "label": "CMO: tranches paid principal in<br/>order of seniority",
+   "tags": "FI IV",
+   "details": [
+    "Redistributes a mortgage pool’s cash flows across bond classes. All tranches get interest; principal goes to tranche 1 first, then 2, then 3.",
+    "Junior tranches absorb losses first; tranches differ in prepayment and extension exposure and are sold to investors with different risk appetites."
+   ]
+  },
+  "CMR": {
+   "type": "res",
+   "label": "Tranching reallocates risk;<br/>total cash flow is unchanged",
+   "tags": "FI IV",
+   "details": [
+    "The tranche payoffs add up to the pool in every state."
+   ],
+   "example": "Face 10 per tranche. Boom: pool 30 ⇒ (10, 10, 10). Recession: pool 15 ⇒ (10, 5, 0)."
+  },
+  "EQ": {
+   "type": "beyond",
+   "label": "Equilibrium<br/>(Econ 139)",
+   "tags": "L1",
+   "details": [
+    "Add preferences, beliefs, endowments and market clearing to explain why prices arise.",
+    "It does not replace the no-arbitrage restrictions."
+   ]
+  },
+  "EMP": {
+   "type": "beyond",
+   "label": "Empirical asset pricing<br/>(Econ 144)",
+   "tags": "L1",
+   "details": [
+    "Works with realized returns, factors, pricing errors and estimated SDFs.",
+    "Tests whether observed prices satisfy the theoretical restrictions."
+   ]
+  },
+  "MV": {
+   "type": "beyond",
+   "label": "Mean–variance<br/>analysis",
+   "tags": "L1",
+   "details": [
+    "Summarizes assets by average return, volatility, and how they move together, instead of tracking every state.",
+    "Shows which risk–return combinations are feasible given prices. It describes feasible portfolios, not optimal choices."
+   ]
+  },
+  "EFF": {
+   "type": "beyond",
+   "label": "Information &amp;<br/>efficiency",
+   "tags": "L1",
+   "details": [
+    "Information I<sub>t</sub> restricts how predictable returns are. Efficiency claims are about conditional expectations.",
+    "Efficient markets can still be risky. Efficient does not mean prices are “right”."
+   ]
+  }
+ },
+ "edges": [
+  [
+   "T",
+   "X",
+   "b",
+   "pays at t+1"
+  ],
+  [
+   "T",
+   "P",
+   "b",
+   "paid at t"
+  ],
+  [
+   "S",
+   "X",
+   "b",
+   "one entry per state"
+  ],
+  [
+   "S",
+   "PR",
+   "b",
+   "weight each state"
+  ],
+  [
+   "S",
+   "SNOT",
+   "m",
+   ""
+  ],
+  [
+   "X",
+   "P",
+   "b",
+   "P(·) maps payoff → price"
+  ],
+  [
+   "X",
+   "RFX",
+   "b",
+   "special case"
+  ],
+  [
+   "X",
+   "RET",
+   "b",
+   "numerator P<sub>t+1</sub>+D<sub>t+1</sub>"
+  ],
+  [
+   "P",
+   "RET",
+   "b",
+   "÷ P<sub>t</sub>"
+  ],
+  [
+   "RET",
+   "LOG",
+   "b",
+   "ln"
+  ],
+  [
+   "RET",
+   "MP",
+   "b",
+   "compound ×"
+  ],
+  [
+   "T",
+   "MP",
+   "b",
+   "chain dates"
+  ],
+  [
+   "LOG",
+   "LADD",
+   "i",
+   ""
+  ],
+  [
+   "MP",
+   "LADD",
+   "i",
+   "take logs"
+  ],
+  [
+   "RET",
+   "AM",
+   "b",
+   "average"
+  ],
+  [
+   "MP",
+   "GM",
+   "b",
+   "per-period equivalent"
+  ],
+  [
+   "LADD",
+   "GM",
+   "i",
+   "= mean of logs"
+  ],
+  [
+   "MP",
+   "EAR",
+   "b",
+   "m sub-periods / yr"
+  ],
+  [
+   "EAR",
+   "CC",
+   "i",
+   "m → ∞"
+  ],
+  [
+   "LOG",
+   "CC",
+   "e",
+   "same object"
+  ],
+  [
+   "X",
+   "RX",
+   "b",
+   "deflate"
+  ],
+  [
+   "INF",
+   "RX",
+   "b",
+   "÷ (1 + π)"
+  ],
+  [
+   "RX",
+   "REAL",
+   "b",
+   "÷ P<sub>t</sub>"
+  ],
+  [
+   "RET",
+   "REAL",
+   "b",
+   "nominal version"
+  ],
+  [
+   "H",
+   "PF",
+   "b",
+   "Σ a<sub>i</sub>"
+  ],
+  [
+   "X",
+   "PF",
+   "b",
+   "combine payoffs"
+  ],
+  [
+   "P",
+   "PF",
+   "b",
+   "combine prices"
+  ],
+  [
+   "PF",
+   "ACC",
+   "m",
+   ""
+  ],
+  [
+   "PF",
+   "W",
+   "b",
+   "wealth shares"
+  ],
+  [
+   "W",
+   "RPF",
+   "i",
+   "payoff ÷ price"
+  ],
+  [
+   "RET",
+   "RPF",
+   "b",
+   "per-asset R<sub>i</sub>"
+  ],
+  [
+   "LOG",
+   "RPF",
+   "x",
+   "✗ logs don’t add across assets"
+  ],
+  [
+   "W",
+   "IDX",
+   "b",
+   "pick a weight rule"
+  ],
+  [
+   "IDX",
+   "PW",
+   "b",
+   ""
+  ],
+  [
+   "IDX",
+   "VW",
+   "b",
+   ""
+  ],
+  [
+   "IDX",
+   "EW",
+   "b",
+   ""
+  ],
+  [
+   "VW",
+   "FF",
+   "b",
+   "drop locked-up shares"
+  ],
+  [
+   "PW",
+   "PWR",
+   "i",
+   ""
+  ],
+  [
+   "PW",
+   "NOREB",
+   "i",
+   ""
+  ],
+  [
+   "VW",
+   "NOREB",
+   "i",
+   ""
+  ],
+  [
+   "EW",
+   "REB",
+   "i",
+   ""
+  ],
+  [
+   "PF",
+   "R1",
+   "i",
+   "payoffs add ⇒ prices add"
+  ],
+  [
+   "PF",
+   "R2",
+   "i",
+   "buy a×"
+  ],
+  [
+   "ACC",
+   "R1",
+   "m",
+   ""
+  ],
+  [
+   "R1",
+   "P0",
+   "i",
+   "set Y = 0"
+  ],
+  [
+   "R1",
+   "LIN",
+   "i",
+   ""
+  ],
+  [
+   "R2",
+   "LIN",
+   "i",
+   ""
+  ],
+  [
+   "X",
+   "ARB",
+   "b",
+   ""
+  ],
+  [
+   "P",
+   "ARB",
+   "b",
+   ""
+  ],
+  [
+   "ARB",
+   "NA",
+   "b",
+   "assume none exist"
+  ],
+  [
+   "NA",
+   "NANOT",
+   "m",
+   ""
+  ],
+  [
+   "NA",
+   "POS",
+   "e",
+   "entire content"
+  ],
+  [
+   "NA",
+   "LOOP",
+   "i",
+   "else buy cheap, sell dear"
+  ],
+  [
+   "S",
+   "AD",
+   "b",
+   "one per state"
+  ],
+  [
+   "AD",
+   "Q",
+   "b",
+   "its price"
+  ],
+  [
+   "LIN",
+   "SPR",
+   "i",
+   "linear"
+  ],
+  [
+   "POS",
+   "SPR",
+   "i",
+   "+ positive"
+  ],
+  [
+   "Q",
+   "SPR",
+   "b",
+   "are the weights"
+  ],
+  [
+   "COMP",
+   "REPL",
+   "i",
+   "build each e<sub>s</sub>"
+  ],
+  [
+   "AD",
+   "REPL",
+   "b",
+   ""
+  ],
+  [
+   "LOOP",
+   "REPL",
+   "i",
+   "price forced"
+  ],
+  [
+   "REPL",
+   "UNQ",
+   "i",
+   ""
+  ],
+  [
+   "SPR",
+   "UNQ",
+   "b",
+   "existence +"
+  ],
+  [
+   "UNQ",
+   "UNOT",
+   "m",
+   ""
+  ],
+  [
+   "INC",
+   "MANY",
+   "i",
+   "fewer equations than unknowns"
+  ],
+  [
+   "SPR",
+   "MANY",
+   "b",
+   ""
+  ],
+  [
+   "MANY",
+   "SPAN",
+   "m",
+   "inside the span"
+  ],
+  [
+   "MANY",
+   "BOUND",
+   "m",
+   "outside the span"
+  ],
+  [
+   "LOOP",
+   "SPAN",
+   "i",
+   ""
+  ],
+  [
+   "POS",
+   "BOUND",
+   "i",
+   "q #gt; 0 ⇒ bounds"
+  ],
+  [
+   "SPR",
+   "M",
+   "b",
+   "÷ π<sub>s</sub>"
+  ],
+  [
+   "PR",
+   "M",
+   "b",
+   "per-state probability"
+  ],
+  [
+   "M",
+   "PEQ",
+   "i",
+   ""
+  ],
+  [
+   "SPR",
+   "PEQ",
+   "e",
+   "equivalent given π"
+  ],
+  [
+   "M",
+   "MVAL",
+   "m",
+   "means"
+  ],
+  [
+   "M",
+   "MNOT",
+   "m",
+   "is not"
+  ],
+  [
+   "UNQ",
+   "MU",
+   "i",
+   "+ fix π"
+  ],
+  [
+   "MANY",
+   "MM",
+   "i",
+   ""
+  ],
+  [
+   "SPR",
+   "STRUCT",
+   "m",
+   ""
+  ],
+  [
+   "STRUCT",
+   "IMRS",
+   "m",
+   "one such structure"
+  ],
+  [
+   "M",
+   "IMRS",
+   "m",
+   "interpreted as"
+  ],
+  [
+   "PEQ",
+   "RQ",
+   "i",
+   "÷ P(X)"
+  ],
+  [
+   "RET",
+   "RQ",
+   "b",
+   "X/P = 1 + R"
+  ],
+  [
+   "RQ",
+   "ERQ",
+   "i",
+   "Cov(Y,Z) = E[YZ] − E[Y]E[Z]"
+  ],
+  [
+   "RFX",
+   "RFR",
+   "b",
+   "price with E[m·1]"
+  ],
+  [
+   "PEQ",
+   "RFR",
+   "i",
+   ""
+  ],
+  [
+   "ERQ",
+   "PREM",
+   "i",
+   ""
+  ],
+  [
+   "RFR",
+   "PREM",
+   "i",
+   "substitute 1/E[m] = 1 + R<sub>f</sub>"
+  ],
+  [
+   "PREM",
+   "RISK",
+   "m",
+   "so"
+  ],
+  [
+   "RISK",
+   "RNOT",
+   "m",
+   ""
+  ],
+  [
+   "PREM",
+   "SIGN",
+   "m",
+   "sign of Cov"
+  ],
+  [
+   "MVAL",
+   "SIGN",
+   "m",
+   ""
+  ],
+  [
+   "PEQ",
+   "DATED",
+   "b",
+   "add horizon T"
+  ],
+  [
+   "T",
+   "DATED",
+   "b",
+   "date t+T"
+  ],
+  [
+   "FI",
+   "ZERO",
+   "b",
+   "simplest case"
+  ],
+  [
+   "RFX",
+   "ZERO",
+   "b",
+   "dated version"
+  ],
+  [
+   "DATED",
+   "ZP",
+   "i",
+   "X = 1 in every state"
+  ],
+  [
+   "ZERO",
+   "ZP",
+   "b",
+   "its price"
+  ],
+  [
+   "RFR",
+   "RFS",
+   "e",
+   "T = 1"
+  ],
+  [
+   "ZP",
+   "RFS",
+   "i",
+   "T = 1"
+  ],
+  [
+   "RFS",
+   "RFI",
+   "m",
+   ""
+  ],
+  [
+   "ZP",
+   "LONGR",
+   "m",
+   "sold before T"
+  ],
+  [
+   "ZP",
+   "SPOT",
+   "b",
+   "reparameterize"
+  ],
+  [
+   "GM",
+   "SPOT",
+   "m",
+   "same (·)<sup>1/T</sup> − 1 trick"
+  ],
+  [
+   "SPOT",
+   "SPC",
+   "b",
+   "across T"
+  ],
+  [
+   "SPOT",
+   "SPNOT",
+   "m",
+   ""
+  ],
+  [
+   "FI",
+   "CB",
+   "b",
+   "with coupons"
+  ],
+  [
+   "CB",
+   "CBZ",
+   "b",
+   "bundle of dated $"
+  ],
+  [
+   "ZP",
+   "CBZ",
+   "b",
+   "Σ CF·P(s)"
+  ],
+  [
+   "LOOP",
+   "CBZ",
+   "i",
+   "same CFs ⇒ same price"
+  ],
+  [
+   "CBZ",
+   "SPP",
+   "e",
+   "via S<sub>s</sub>"
+  ],
+  [
+   "SPOT",
+   "SPP",
+   "b",
+   ""
+  ],
+  [
+   "SPP",
+   "ONEN",
+   "m",
+   ""
+  ],
+  [
+   "CBZ",
+   "YTM",
+   "b",
+   "one rate reproducing P"
+  ],
+  [
+   "YTM",
+   "YNOT",
+   "m",
+   ""
+  ],
+  [
+   "YTM",
+   "ANN",
+   "i",
+   "level coupons"
+  ],
+  [
+   "ANN",
+   "PAR",
+   "i",
+   "C/F = R"
+  ],
+  [
+   "ANN",
+   "CONS",
+   "i",
+   "T → ∞"
+  ],
+  [
+   "YTM",
+   "YC",
+   "b",
+   "across maturities"
+  ],
+  [
+   "LONGR",
+   "DISC",
+   "m",
+   "formalized as"
+  ],
+  [
+   "CBZ",
+   "DISC",
+   "i",
+   "risk inherited from zeros"
+  ],
+  [
+   "YTM",
+   "MD",
+   "b",
+   "differentiate P(R)"
+  ],
+  [
+   "DISC",
+   "MD",
+   "b",
+   "sensitivity"
+  ],
+  [
+   "MD",
+   "DAP",
+   "i",
+   ""
+  ],
+  [
+   "CBZ",
+   "MAC",
+   "b",
+   "PV of each CF"
+  ],
+  [
+   "W",
+   "MAC",
+   "m",
+   "weights = value shares, like w<sub>i</sub>"
+  ],
+  [
+   "MAC",
+   "MD",
+   "b",
+   "÷ (1 + R)"
+  ],
+  [
+   "MAC",
+   "DZ",
+   "i",
+   ""
+  ],
+  [
+   "MAC",
+   "DPR",
+   "i",
+   ""
+  ],
+  [
+   "MD",
+   "PD",
+   "i",
+   "value-weighted"
+  ],
+  [
+   "DISC",
+   "STB",
+   "b",
+   "kinds of curve move"
+  ],
+  [
+   "STB",
+   "EFD",
+   "b",
+   "reprice under each"
+  ],
+  [
+   "SPP",
+   "EFD",
+   "b",
+   "reprice off spot curve"
+  ],
+  [
+   "MD",
+   "CONV",
+   "b",
+   "2nd derivative"
+  ],
+  [
+   "DAP",
+   "DCA",
+   "i",
+   "+ ½C(ΔR)²"
+  ],
+  [
+   "CONV",
+   "DCA",
+   "b",
+   ""
+  ],
+  [
+   "DCA",
+   "CVI",
+   "m",
+   ""
+  ],
+  [
+   "NA",
+   "FWD",
+   "i",
+   "long zero = roll short"
+  ],
+  [
+   "SPOT",
+   "FWD",
+   "b",
+   ""
+  ],
+  [
+   "FWD",
+   "FWP",
+   "e",
+   "in zero prices"
+  ],
+  [
+   "ZP",
+   "FWP",
+   "b",
+   ""
+  ],
+  [
+   "FWD",
+   "FNOT",
+   "m",
+   ""
+  ],
+  [
+   "FNOT",
+   "TP",
+   "m",
+   "instead"
+  ],
+  [
+   "PREM",
+   "TP",
+   "m",
+   "same logic as risk premium"
+  ],
+  [
+   "DISC",
+   "BR2",
+   "m",
+   "discounting side"
+  ],
+  [
+   "BR",
+   "BR2",
+   "m",
+   ""
+  ],
+  [
+   "YTM",
+   "YSP",
+   "b",
+   "R<sub>corp</sub> − R<sub>Treas</sub>"
+  ],
+  [
+   "SPOT",
+   "SSP",
+   "b",
+   "shift whole curve"
+  ],
+  [
+   "SSP",
+   "OAS",
+   "b",
+   "+ option model"
+  ],
+  [
+   "YSP",
+   "SPI",
+   "m",
+   ""
+  ],
+  [
+   "SSP",
+   "SPI",
+   "m",
+   ""
+  ],
+  [
+   "SPI",
+   "CDS",
+   "m",
+   "isolate default"
+  ],
+  [
+   "CDS",
+   "CDP",
+   "i",
+   "zero value at inception"
+  ],
+  [
+   "MBS",
+   "MBR",
+   "i",
+   ""
+  ],
+  [
+   "MBS",
+   "CMO",
+   "b",
+   "tranche the pool"
+  ],
+  [
+   "CMO",
+   "CMR",
+   "i",
+   ""
+  ],
+  [
+   "LIN",
+   "CMR",
+   "m",
+   "tranches add up to pool"
+  ],
+  [
+   "IMRS",
+   "EQ",
+   "m",
+   "preferences"
+  ],
+  [
+   "STRUCT",
+   "EQ",
+   "m",
+   ""
+  ],
+  [
+   "MM",
+   "EMP",
+   "m",
+   "estimate m"
+  ],
+  [
+   "RPF",
+   "MV",
+   "m",
+   "summarize by mean, vol, comovement"
+  ],
+  [
+   "RET",
+   "EFF",
+   "m",
+   "predictability given I<sub>t</sub>"
+  ]
+ ],
+ "sym": {
+  "T": "t",
+  "S": "s",
+  "PR": "π<sub>s</sub>",
+  "X": "X",
+  "P": "P",
+  "RFX": "X<sub>s</sub>=1",
+  "RET": "1+R",
+  "GM": "geo mean",
+  "LOOP": "LOOP",
+  "LIN": "linear",
+  "NA": "no-arb",
+  "W": "w<sub>i</sub>",
+  "PREM": "risk premium",
+  "ZP": "P(T)",
+  "SPOT": "S<sub>T</sub>",
+  "LONGR": "long-bond risk",
+  "YTM": "YTM",
+  "CBZ": "Σ CF·P(s)"
+ }
+}

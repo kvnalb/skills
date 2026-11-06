@@ -4,6 +4,7 @@ Reusable skills for learning and studying, in the open [Agent Skills](https://ag
 
 | Skill | What it does | Needs |
 |---|---|---|
+| [Concept Graph](concept-graph/SKILL.md) | Turns notes, slides, chapters or papers into an interactive concept map, with typed nodes and click-to-open detail panels. | Python 3, a browser with internet access |
 | [Intuition Guide](intuition-guide/SKILL.md) | Builds study guides that read start to finish, showing why each idea matters and how it leads to the next. | Nothing |
 | [Slides RAG](slides-rag/README.md) | Indexes lecture PDFs once, then answers from only the relevant slides, with citations. Keeps the slide images for equations and diagrams. | Shell access, Python 3.9+, PyMuPDF or `uv` |
 
@@ -29,4 +30,4 @@ npx skills add kvnalb/skills --list
 
 ## Use
 
-Skills load on their own when a request matches, so you can just ask: "make me a study guide for dynamic programming" or "explain the theta join formula from lecture 3".
+Skills load on their own when a request matches, so you can just ask: "make me a study guide for dynamic programming", "map out how these lectures connect" or "explain the theta join formula from lecture 3".

@@ -2,6 +2,7 @@
 name: slides-rag
 description: Answer questions from university lecture PDFs without reloading whole decks. Indexes each PDF once into a persistent full-text and slide-image cache, then retrieves only the relevant slides, with lecture and slide citations. Use when the user asks to study, explain, summarize, review, or quiz on lecture slides or course PDFs, or asks what a lecture or slide says, even if they don't name a file. Examples include "explain slide 12", "what did lecture 3 say about joins", "quiz me on normalization", "summarize this lecture", "review the slides for the midterm", and "index these slides".
 compatibility: Requires shell access and Python 3.9+ with SQLite FTS5, plus PyMuPDF or uv. Works best with an agent that can view local PNG files. Tesseract is optional.
+allowed-tools: Bash(python3 ${CLAUDE_SKILL_DIR}/scripts/slides.py *)
 ---
 
 # slides-rag
@@ -29,7 +30,7 @@ python3 scripts/slides.py <command>
 ## Answering a question
 
 1. If the user names PDFs or a folder, run `index` on them first. Otherwise go straight to `search`; run `status --list` only if search finds nothing relevant.
-2. `search` with 2 to 4 distinctive terms, adding `-l` when the user names a lecture. Rephrase once if the hits look wrong; slides use the course's own vocabulary.
+2. `search` with 2 to 4 distinctive terms, adding `-l` when the user names a lecture. If output says it matched any term, or the hits look wrong, retry with one or two words and `-l`; slides use the course's own vocabulary. Formula slides have little text, so check the flagged hits and `outline` before reading unflagged slides.
 3. `show` only the slides you need. Use `-c 1` when a slide continues an argument.
 4. Decide whether to look at the image:
    - **Open the image file** when `show` prints `VIEW IMAGE` and the answer touches that content, or when the question concerns an equation, diagram, table, layout, annotation, or anything visual.
