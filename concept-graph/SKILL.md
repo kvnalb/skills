@@ -83,9 +83,9 @@ relations hold.
 
 ### 4. Write the data file
 
-Read `references/schema.md` for the exact JSON format. A small complete example (9 nodes, 2 clusters)
-is in `references/example.json`. Skim it to calibrate label length, detail depth and edge style before writing
-your own; a full course usually runs to about 100 nodes. Notes that save rework:
+Read `references/schema.md` for the exact JSON format. A complete real example (118 nodes, 9 clusters,
+one course) is in `references/example_econ136.json`. Skim it to calibrate label length, detail depth and
+edge density before writing your own. Notes that save rework:
 
 - Ids are letters and digits only (`RET`, `LOOP`, `ZP`). No underscores, because the engine parses
   `L_from_to_0` edge ids, and Mermaid keywords such as `end` aren't allowed. Cluster ids follow the same rules.

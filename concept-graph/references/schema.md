@@ -4,7 +4,7 @@ One JSON file. `scripts/build_graph.py` validates it and injects it into `assets
 
 ```json
 {
-  "title": "Course so far as a concept graph",
+  "title": "Econ 136 · course so far as a concept graph",
   "subtitle": "Click any node for everything the notes say about it. Its neighbours stay lit.",
   "start": {
     "heading": "The spine",
