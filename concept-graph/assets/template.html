@@ -10,7 +10,9 @@
   body { margin:0; font:14px/1.45 -apple-system, "Helvetica Neue", Arial, sans-serif; color:var(--ink); background:var(--bg);
          display:grid; grid-template-columns: 1fr 380px; height:100vh; overflow:hidden; }
   #graphwrap { overflow:auto; position:relative; }
-  #graph { padding:24px; transform-origin: 0 0; }
+  #sizer { overflow:hidden; }
+  #graph { padding:24px; transform-origin: 0 0; width:max-content; }
+  #graph.pinching { will-change: transform; }
   #graph svg { max-width:none !important; }
   aside { background:var(--panel); border-left:1px solid var(--line); overflow:auto; padding:16px 18px 40px; }
   h1 { font-size:17px; margin:0 0 2px; } .sub { color:var(--mute); font-size:12.5px; margin:0 0 12px; }
@@ -35,7 +37,7 @@
 </style>
 </head>
 <body>
-<div id="graphwrap"><div id="graph">Loading graph…</div><div id="err"></div></div>
+<div id="graphwrap"><div id="sizer"><div id="graph">Loading graph…</div></div><div id="err"></div></div>
 <aside>
   <h1 id="ttl"></h1>
   <p class="sub" id="sub">Click any node for everything the source says about it. Its neighbours stay lit. Click empty space to reset.</p>
@@ -151,7 +153,7 @@ function wire(el) {
   for (const [g, a] of Object.entries(ghosts)) nodeEl(g)?.addEventListener('click', ev => { ev.stopPropagation(); jump(a); });
   const svg = el.querySelector('svg'), w = +svg.getAttribute('viewBox').split(' ')[2];
   svg.style.width = w + 'px'; svg.removeAttribute('width'); svg.style.maxWidth = 'none';
-  setZ(Math.max(.55, Math.min(1, (document.getElementById('graphwrap').clientWidth - 48) / w)) - z);
+  nat = null; setZ(Math.max(.55, Math.min(1, (document.getElementById('graphwrap').clientWidth - 48) / w)), 0, 0);
   document.getElementById('graphwrap').addEventListener('click', () => { el.classList.remove('focus'); el.querySelectorAll('.hl').forEach(x => x.classList.remove('hl')); });
 }
 function select(id) {
@@ -175,8 +177,38 @@ function select(id) {
      ${outs.length ? `<div class="nb"><b>Leads to:</b> ${outs.map(fmt).join(' · ')}</div>` : ''}`;
   document.querySelectorAll('#detail a[data-n]').forEach(a => a.onclick = () => jump(a.dataset.n));
 }
-let z = 1; const setZ = d => { z = Math.min(2, Math.max(.3, z + d)); document.getElementById('graph').style.zoom = z; document.getElementById('zl').textContent = Math.round(z * 100) + '%'; };
-document.getElementById('zi').onclick = () => setZ(.1); document.getElementById('zo').onclick = () => setZ(-.1);
+// Zoom = GPU transform on #graph (no relayout); #sizer carries the scaled size so scrolling still works.
+// The point under (px, py) in the viewport stays fixed.
+let z = 1, nat = null, pinchT;
+const wrapEl = () => document.getElementById('graphwrap');
+function setZ(t, px, py) {
+  const w = wrapEl(), g = document.getElementById('graph'), sz = document.getElementById('sizer');
+  if (!nat) nat = [g.offsetWidth, g.offsetHeight];
+  px ??= w.clientWidth / 2; py ??= w.clientHeight / 2;
+  const cx = (w.scrollLeft + px) / z, cy = (w.scrollTop + py) / z;
+  z = Math.min(2, Math.max(.1, t));
+  g.style.transform = `scale(${z})`;
+  sz.style.width = nat[0] * z + 'px'; sz.style.height = nat[1] * z + 'px';
+  w.scrollLeft = cx * z - px; w.scrollTop = cy * z - py;
+  document.getElementById('zl').textContent = Math.round(z * 100) + '%';
+}
+// While a pinch is in progress keep the graph on a GPU layer (fast, a bit soft); drop it 200 ms after, so it redraws sharp.
+function pinching() {
+  const g = document.getElementById('graph'); g.classList.add('pinching');
+  clearTimeout(pinchT); pinchT = setTimeout(() => g.classList.remove('pinching'), 200);
+}
+const rel = e => { const r = wrapEl().getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+// Trackpad pinch in Chrome/Firefox/Edge arrives as wheel + ctrlKey.
+wrapEl().addEventListener('wheel', e => {
+  if (!e.ctrlKey) return;
+  e.preventDefault(); pinching(); setZ(z * Math.exp(-e.deltaY * .01), ...rel(e));
+}, { passive: false });
+// Safari sends gesture events instead.
+let gz = 1;
+wrapEl().addEventListener('gesturestart', e => { e.preventDefault(); gz = z; });
+wrapEl().addEventListener('gesturechange', e => { e.preventDefault(); pinching(); setZ(gz * e.scale, ...rel(e)); });
+wrapEl().addEventListener('gestureend', e => e.preventDefault());
+document.getElementById('zi').onclick = () => setZ(z + .1); document.getElementById('zo').onclick = () => setZ(z - .1);
 render().catch(e => document.getElementById('err').textContent = String(e));
 window.__select = select;
 </script>
