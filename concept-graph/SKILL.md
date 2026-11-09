@@ -1,7 +1,6 @@
 ---
 name: concept-graph
 description: Turn course notes, lecture slides/PDFs, textbook chapters, papers or docs into an interactive concept graph (knowledge graph / concept map) - typed node shapes (primitive, definition, rule, result, interpretation, misconception), typed and labeled edges, one cluster per lecture or chapter, and click-to-open panels holding every substantive line and worked example from the source. Use this whenever someone wants to see how the ideas in a body of material connect - "map out these lectures", "make a mind map / mermaid graph of my notes", "visualize how these concepts relate", "help me hold a mental model of this course", "everything is derived from a few primitives, show me the links" - and whenever they ask to add new lectures or chapters to a concept graph built earlier, even if they don't say "graph". Not for codebase architecture diagrams, single algorithm flowcharts, or data charts.
-compatibility: Requires Python 3. The generated page loads Mermaid from a CDN, so viewing it needs internet access. The optional render check needs headless Chrome.
 ---
 
 # Concept graph
@@ -93,6 +92,12 @@ edge density before writing your own. Notes that save rework:
   a literal `<`/`>` in labels as `#lt;`/`#gt;`, and in details as `&lt;`/`&gt;`. No double quotes in labels.
 - `details` is a list of bullets: one substantive statement each, in plain sentences. Put worked
   numbers in `example`.
+- **Every panel defines its own symbols.** A reader opens one panel at a time, so a symbol defined in
+  another node is undefined here. If the label, details or example use any notation not spelled out in that
+  panel (R_f, w_i, σ_ij, G, e, b, D*, …), the first `details` bullet is `Symbols: x = …; y = …`. Flag
+  reused letters with ⚠ (P as probability vs price, C as coupon vs convexity, m as compounding vs SDF).
+  Plain math operators (E, Var, Cov, Σ, ln) need no definition. Check: for each panel, ask "could a
+  reader who opened only this panel say what every symbol means?" Any no is a defect; fix it before building.
 - `start` fills the sidebar's "Start here" panel. Use it for the spine of the material: the chain of 5–8 ideas
   everything hangs on, plus one or two sentences that tie it together.
 
