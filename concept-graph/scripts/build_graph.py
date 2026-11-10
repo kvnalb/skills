@@ -46,6 +46,10 @@ def validate(g):
         if not n.get("label"): errs.append(f"node {n_id}: empty label")
         for k, d in enumerate(n.get("details", [])): check_text(d, f"node {n_id} details[{k}]", False)
         if n.get("example"): check_text(n["example"], f"node {n_id} example", False)
+        for k, pair in enumerate(n.get("symbols", [])):
+            if not (isinstance(pair, list) and len(pair) == 2): errs.append(f"node {n_id} symbols[{k}]: must be [symbol, meaning]")
+            else:
+                for x in pair: check_text(x, f"node {n_id} symbols[{k}]", False)
         if not n.get("details"): warns.append(f"node {n_id}: no details (the click panel will be empty)")
 
     cluster_of, seen_c = {}, set()

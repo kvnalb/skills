@@ -94,7 +94,8 @@ edge density before writing your own. Notes that save rework:
   numbers in `example`.
 - **Every panel defines its own symbols.** A reader opens one panel at a time, so a symbol defined in
   another node is undefined here. If the label, details or example use any notation not spelled out in that
-  panel (R_f, w_i, σ_ij, G, e, b, D*, …), the first `details` bullet is `Symbols: x = …; y = …`. Flag
+  panel (R_f, w_i, σ_ij, G, e, b, D*, …), list each one in the node's `symbols` as `[symbol, meaning]`; the
+  panel shows it as a compact two-column key under the formula, apart from the content bullets. Flag
   reused letters with ⚠ (P as probability vs price, C as coupon vs convexity, m as compounding vs SDF).
   Plain math operators (E, Var, Cov, Σ, ln) need no definition. Check: for each panel, ask "could a
   reader who opened only this panel say what every symbol means?" Any no is a defect; fix it before building.

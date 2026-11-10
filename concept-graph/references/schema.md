@@ -53,6 +53,7 @@ One JSON file. `scripts/build_graph.py` validates it and injects it into `assets
 | `tags` | free text, usually the sources the concept appears in: `L1·L4`, `FI III`, `PS4` |
 | `details` | list of HTML strings, one bullet each: every substantive line the source says about the concept |
 | `example` | optional HTML string: worked numbers from the source |
+| `symbols` | optional list of `[symbol, meaning]` HTML pairs, one per symbol the panel uses; rendered as a two-column key under the formula |
 
 ## Text rules (the validator enforces these)
 
@@ -60,4 +61,4 @@ One JSON file. `scripts/build_graph.py` validates it and injects it into `assets
   The engine also creates connector ids of the form `<source>to<clusterId>`, which must not collide with your ids.
 - Allowed tags everywhere: `br sub sup b i em strong code span`.
 - In `label`, cluster `title` and edge labels: no `"` or backtick; write `<`/`>` as `#lt;`/`#gt;`; no `|` in edge labels.
-- In `details`/`example`: write `<`/`>` as `&lt;`/`&gt;`; `&amp;` for `&`.
+- In `details`/`example`/`symbols`: write `<`/`>` as `&lt;`/`&gt;`; `&amp;` for `&`.
