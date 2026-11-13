@@ -4,10 +4,14 @@ Reusable skills for learning, studying, and documenting AI use, in the open [Age
 
 | Skill | What it does | Needs |
 |---|---|---|
-| [AI Disclosure Log](ai-disclosure-log/SKILL.md) | Creates a nested-bullet disclosure summary and interaction log, saved as Markdown and PDF. | Python 3, ReportLab; pypdf for export tests |
-| [Concept Graph](concept-graph/SKILL.md) | Turns notes, slides, chapters or papers into an interactive concept map, with typed nodes and click-to-open detail panels. | Python 3, a browser with internet access |
-| [Intuition Guide](intuition-guide/SKILL.md) | Builds study guides that read start to finish, showing why each idea matters and how it leads to the next. | Nothing |
-| [Slides RAG](slides-rag/README.md) | Indexes lecture PDFs once, then answers from only the relevant slides, with citations. Keeps the slide images for equations and diagrams. | Shell access, Python 3.9+, PyMuPDF or `uv` |
+| [AI Disclosure Log](skills/ai-disclosure-log/SKILL.md) | Creates a nested-bullet disclosure summary and interaction log, saved as Markdown and PDF. | Python 3, ReportLab; pypdf for export tests |
+| [Concept Graph](skills/concept-graph/SKILL.md) | Turns notes, slides, chapters or papers into an interactive concept map, with typed nodes and click-to-open detail panels. | Python 3, a browser with internet access |
+| [Intuition Guide](skills/intuition-guide/SKILL.md) | Builds study guides that read start to finish, showing why each idea matters and how it leads to the next. | Nothing |
+| [Slides RAG](skills/slides-rag/README.md) | Indexes lecture PDFs once, then answers from only the relevant slides, with citations. Keeps the slide images for equations and diagrams. | Shell access, Python 3.9+, PyMuPDF or `uv` |
+
+## Repository layout
+
+Each skill lives at `skills/<name>/SKILL.md`, with its scripts and assets alongside it. There is no root `SKILL.md`.
 
 ## Install
 
@@ -32,3 +36,7 @@ npx skills add kvnalb/skills --list
 ## Use
 
 Skills load on their own when a request matches, so you can just ask: "make me a study guide for dynamic programming", "map out how these lectures connect" or "explain the theta join formula from lecture 3".
+
+## Discovery and listing
+
+The `--list` command above checks discovery without installing. The [skills.sh FAQ](https://skills.sh/docs/faq) says leaderboard listings are driven by installation telemetry. Successful CLI discovery confirms the skills can be found; it does not by itself confirm a website listing.
