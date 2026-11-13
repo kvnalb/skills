@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI Disclosure Log"
+  short_description: "Disclosure Summary and Prompt Log as Markdown and PDF"
+  default_prompt: "Use $ai-disclosure-log to save this chat as a nested-bullet Disclosure Summary and a Disclosure Log table covering Context Provided, Prompt, AI Output, Revision, and Decision, in Markdown and PDF."
